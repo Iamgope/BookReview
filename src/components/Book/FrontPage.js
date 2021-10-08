@@ -1,8 +1,10 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { Colors } from "../UI/colors";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import NiceBox from "../UI/BackgroundCard";
 import { MyButton } from "../UI/Button";
+import BookRequestPage from "./BookRequest";
+import ModalUI from "../UI/Modal";
 /* All The Styles Listed Here*/
 
 const rootStyle = {
@@ -14,7 +16,7 @@ const rootStyle = {
 
 const ImgStyle = {
   width: 350,
-  height: 500,
+  height: 450,
   marginTop: "3%",
   marginBottom: "2%",
 };
@@ -25,35 +27,47 @@ const DescriptionStyle = {
 
 /* Main Component The FrontPage of The Book */
 const FrontPage = (props) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <Grid container columnSpacing={5} sx={rootStyle}>
-      <Grid item>
-        <ImageView Image={props.Book.BookImage} />
-        
-        <MyButton
-        Type="outlined"
-        onClick={() => console.log("")}
-        ButtonText="Request Book"
-       
-      />
-      </Grid>
+    <Fragment>
+      <Grid container columnSpacing={5} sx={rootStyle}>
+        <Grid item>
+          <ImageView Image={props.Book.BookImage} />
 
-      <Grid item>
-        <BookDescription
-          Title={props.Book.BookName}
-          Description={props.Book.Description}
-          Author={props.Book.Author}
-        />
+          <MyButton
+            Type="outlined"
+            onClick={() => setOpen(true)}
+            ButtonText="Request Book"
+          />
+        </Grid>
+
+        <Grid item>
+          <BookDescription
+            Title={props.Book.BookName}
+            Description={props.Book.Description}
+            Author={props.Book.Author}
+          />
+        </Grid>
+        <Grid item>
+          <Info
+            price={props.Book.Price}
+            ISBN_NO={props.Book.ISBN_NO}
+            Pages={props.Book.Pages}
+            Author={props.Book.Author}
+          />
+        </Grid>
       </Grid>
-      <Grid item>
-        <Info
-          price={props.Book.Price}
-          ISBN_NO={props.Book.ISBN_NO}
-          Pages={props.Book.Pages}
-          Author={props.Book.Author}
-        />
-      </Grid>
-    </Grid>
+      <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
+        <BookRequestPage handleClose={handleClose}/>
+      </ModalUI>
+      ;
+    </Fragment>
   );
 };
 export default FrontPage;
@@ -82,7 +96,7 @@ export const BookDescription = (props) => {
         <Typography
           variant="subtitle1"
           paragraph
-          sx={{ maxHeight: ReadMore ? "fit-content" : 400, overflow: "hidden" }}
+          sx={{ maxHeight: ReadMore ? "fit-content" : 360, overflow: "hidden" }}
           gutterBottom
         >
           {props.Description}
@@ -113,7 +127,6 @@ export const Info = (props) => {
   return (
     <>
       <NiceBox>
-          
         <Typography
           variant="h3"
           sx={{
@@ -129,9 +142,6 @@ export const Info = (props) => {
         <InfoListItem a="ISBN Number" b={props.ISBN_NO} />
         <InfoListItem a="Pages" b={props.Pages} />
       </NiceBox>
-
-
-     
     </>
   );
 };

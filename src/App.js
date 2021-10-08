@@ -6,6 +6,8 @@ import NavBar from "./components/Basic/NavBar";
 import ModalUI from "./components/UI/Modal";
 import axios from "axios";
 import FrontPage from "./components/Book/FrontPage";
+import ExploreBooks from "./components/Book/ExploreBooks";
+import CreateBook from "./components/Book/CreateBook/CreateBook";
 
 
 
@@ -33,7 +35,7 @@ const App = () => {
     setOpen(false);
   };
   const SampleBook = {
-    BookName: "The simple ways of Success",
+    BookName: "The simple Success",
     Author: "Khaleesi Khan",
     Price: "200",
     Description:
@@ -55,6 +57,8 @@ const App = () => {
         <AuthForm handleClose={handleClose} />
       </ModalUI>
       <FrontPage Book={SampleBook} />
+      <ExploreBooks/>
+      <CreateBook/>
     </main>
   );
 };

@@ -129,9 +129,11 @@ const SignUp = (props) => {
         </Box>
         <Button
           type="submit"
-          variant="contained"
+          variant="outlined"
           sx={{
-            background: Colors.purple,
+            color:Colors.purple,
+            border:`3px solid ${Colors.LightBlue}`,
+           '&:hover':{ background: Colors.purple,color:'white'},
             marginTop: "10%",
             fontSize: "2ch",
             textTransform: "none",
