@@ -64,7 +64,7 @@ const FrontPage = (props) => {
         </Grid>
       </Grid>
       <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
-        <BookRequestPage handleClose={handleClose}/>
+        <BookRequestPage handleClose={handleClose} />
       </ModalUI>
       ;
     </Fragment>
