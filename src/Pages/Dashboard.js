@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import ProfileDetails from "../Profile/ProfileDetails";
-import TogglePosts from "../Profile/TogglePosts";
+import ProfileDetails from "../components/Profile/ProfileDetails";
+import TogglePosts from "../components/Profile/TogglePosts";
 
 const Dashboard = () => {
   // useEffect(() => {

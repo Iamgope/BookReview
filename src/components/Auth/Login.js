@@ -47,15 +47,18 @@ const Login = (props) => {
   //   };
   return (
     <>
+    
       <form onSubmit={handleSubmitForm}>
         <Box
           sx={{
             border: `2px solid ${Colors.lightPurple}`,
             padding: "5%",
-           // borderRadius: "10%",
+           borderRadius: "10%",
             //borderTopRightRadius: "10%",
           }}
         >
+              <h1 style={{color:Colors.purple,textAlign:'center'}}>Welcome back</h1>
+
           <TextField
             fullWidth
             label="username"

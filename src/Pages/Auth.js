@@ -1,9 +1,9 @@
 
 import { ToggleButton, ToggleButtonGroup, Box } from "@mui/material";
 import { useState } from "react";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import {Colors} from '../UI/colors'
+import Login from "../components/Auth/Login";
+import SignUp from "../components/Auth/SignUp";
+import {Colors} from '../components/UI/colors'
 const AuthForm = (props) => {
     const [isLogin,setIsLogin]=useState(true);
 
