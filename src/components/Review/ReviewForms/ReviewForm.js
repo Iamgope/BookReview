@@ -48,6 +48,7 @@ const SampleReviewQuestions = [
 ];
 
 const ReviewForm = () => {
+
   const rootStyle = {
     justifyContent: "center",
     color: Colors.purple,
@@ -56,7 +57,8 @@ const ReviewForm = () => {
     paddingRight: "5%",
   };
   const [BoxState, setBoxState] = useState("Add");
-  const Questions = SampleReviewQuestions.map((Question, index) => (
+  const[ ReviewQuestions,setReviewQuestions]=useState(SampleReviewQuestions);
+  const Questions = ReviewQuestions.map((Question, index) => (
     <h5
       style={{
         textAlign: "left",
@@ -68,6 +70,11 @@ const ReviewForm = () => {
       {Question.Question}
     </h5>
   ));
+  const onAddQuestions=(question)=>{
+    const UpdatedQuestions=[...ReviewQuestions,question];
+    setReviewQuestions(UpdatedQuestions);
+    setBoxState(ReviewQuestions.length)
+  }
   return (
     <Fragment>
       <h1 style={{ color: Colors.purple, textAlign: "center" }}>
@@ -109,8 +116,8 @@ const ReviewForm = () => {
         </Grid>
         <Grid item>
           <TheBox>
-              {BoxState === "Add" && <AddQuestions />}
-              {BoxState!=="Add" && <ShowQuestions Question={SampleReviewQuestions[+BoxState]}/>}
+              {BoxState === "Add" && <AddQuestions onAddQuestions={onAddQuestions}/>}
+              {BoxState!=="Add" && <ShowQuestions Question={ReviewQuestions[+BoxState]}/>}
               </TheBox>
         </Grid>
       </Grid>
