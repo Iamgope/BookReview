@@ -1,10 +1,10 @@
 import { Button, Grid, Typography } from "@mui/material";
-import { Colors } from "../UI/colors";
+import { Colors } from "../components/UI/colors";
 import { Fragment, useState } from "react";
-import NiceBox from "../UI/BackgroundCard";
-import { MyButton } from "../UI/Button";
-import BookRequestPage from "./BookRequest";
-import ModalUI from "../UI/Modal";
+import NiceBox from "../components/UI/BackgroundCard";
+import { MyButton } from "../components/UI/Button";
+import BookRequestPage from "../components/Book/BookRequest";
+import ModalUI from "../components/UI/Modal";
 /* All The Styles Listed Here*/
 
 const rootStyle = {
@@ -26,7 +26,7 @@ const DescriptionStyle = {
 };
 
 /* Main Component The FrontPage of The Book */
-const FrontPage = (props) => {
+const BookFrontPage = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -70,7 +70,7 @@ const FrontPage = (props) => {
     </Fragment>
   );
 };
-export default FrontPage;
+export default BookFrontPage;
 
 /*Image For the View */
 export const ImageView = (props) => {

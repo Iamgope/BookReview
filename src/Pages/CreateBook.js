@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
-import { Colors } from "../UI/colors";
+import { Colors } from "../components/UI/colors";
 import {  useState } from "react";
-import Introduction  from "../Book/CreateBook/Introduction";
-import DeadLine from "../Book/CreateBook/DeadLine";
-import Description from "../Book/CreateBook/AddDescription";
+import Introduction  from "../components/Book/CreateBook/Introduction";
+import DeadLine from "../components/Book/CreateBook/DeadLine";
+import Description from "../components/Book/CreateBook/AddDescription";
 
 
 

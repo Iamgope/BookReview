@@ -4,15 +4,13 @@ import AuthForm from "./Pages/Auth";
 import NavBar from "./components/Basic/NavBar";
 import ModalUI from "./components/UI/Modal";
 import axios from "axios";
-// import FrontPage from "./components/Book/FrontPage";
-// import ExploreBooks from "./components/Book/ExploreBooks";
-// import CreateBook from "./components/Pages/CreateBook";
-import FrontPage from "./components/Book/FrontPage";
-import Book003 from './Media/Book003.png'
-import Dashboard from './Pages/Dashboard'
-import ReviewForm from "./components/Review/ReviewForms/ReviewForm";
-
-
+import Book003 from "./Media/Book003.png";
+import Dashboard from "./Pages/Dashboard";
+import CreateBook from "./Pages/CreateBook";
+import ReviewFrontPage from "./Pages/ReviewFrontPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import BookFrontPage from "./Pages/BookFrontPage";
+import ReviewForm from "./components/Review/ReviewForm";
 const App = () => {
   const [open, setOpen] = useState(false);
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -46,22 +44,38 @@ const App = () => {
     BookImage: Book003,
   };
   return (
-    <main>
-      <NavBar
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        username={username}
-        isAuthenticated={isAuthenticated}
-      />
+    <Router>
+      <main>
+        <NavBar
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          username={username}
+          isAuthenticated={isAuthenticated}
+        />
 
-      <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
-        <AuthForm handleClose={handleClose} />
-      </ModalUI>
-      {/* <FrontPage Book={SampleBook} />
-      <ExploreBooks/> */}
-      {/* <CreateBook/> */}
-      <ReviewForm/>
-    </main>
+        <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
+          <AuthForm handleClose={handleClose} />
+        </ModalUI>
+        <Switch>
+          <Route exact path="/">
+            <ReviewForm />
+          </Route>
+          <Route path="/Create">
+            <CreateBook />
+          </Route>
+          <Route path="/Profile">
+            <Dashboard />
+          </Route>
+          <Route path="/Post/1">
+            <BookFrontPage Book={SampleBook} />
+          </Route>
+          <Route path="/Review/1">
+            <ReviewFrontPage />
+          </Route>
+          <Route path="*"></Route>
+        </Switch>
+      </main>
+    </Router>
   );
 };
 export default App;

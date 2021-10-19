@@ -11,7 +11,7 @@ const NiceBox = (props) => {
         paddingInline: 0,
       }}
     >
-      <div style={{ padding: "5%" }}>{props.children}</div>
+      <div style={{ padding: "3%" }}>{props.children}</div>
     </Box>
   );
 };

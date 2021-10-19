@@ -8,6 +8,7 @@ import { HeadLine1 } from "../../UI/HeadLine";
 const Introduction = (props) => {
 
   const onChangeName = (event) => {
+    console.log(event.target.value)
     props.setBookName(event.target.value);
     setisColorRed(false);
   };

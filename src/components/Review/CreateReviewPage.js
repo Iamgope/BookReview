@@ -1,8 +1,8 @@
 import { Grid, Fab } from "@mui/material";
 import { Fragment, useState } from "react";
-import NiceBox from "../../UI/BackgroundCard";
-import { Colors } from "../../UI/colors";
-import Book3 from "../../../Media/Book003.png";
+import NiceBox from "../UI/BackgroundCard";
+import { Colors } from "../UI/colors";
+import Book3 from "../../Media/Book003.png";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AddQuestions from "./AddQuestion";
 import TheBox from "./TheBox";
@@ -54,7 +54,7 @@ const ReviewForm = () => {
     color: Colors.purple,
     marginBottom: "5%",
     paddingTop: "5%",
-    paddingRight: "5%",
+    
   };
   const [BoxState, setBoxState] = useState("Add");
   const[ ReviewQuestions,setReviewQuestions]=useState(SampleReviewQuestions);
@@ -77,10 +77,7 @@ const ReviewForm = () => {
   }
   return (
     <Fragment>
-      <h1 style={{ color: Colors.purple, textAlign: "center" }}>
-        {" "}
-        The Mountain Tales
-      </h1>
+     
 
       <Grid container sx={rootStyle} columnSpacing="10%">
         <Grid item>
