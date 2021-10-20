@@ -1,12 +1,12 @@
 import { Grid, Fab } from "@mui/material";
 import { Fragment, useState } from "react";
-import NiceBox from "../UI/BackgroundCard";
-import { Colors } from "../UI/colors";
-import Book3 from "../../Media/Book003.png";
+import NiceBox from "../../UI/BackgroundCard";
+import { Colors } from "../../UI/colors";
+import Book3 from "../../../Media/Book003.png";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AddQuestions from "./AddQuestion";
-import TheBox from "./TheBox";
-import ShowQuestions from "./ShowQuestions";
+import TheBox from "../TheBox";
+import ShowQuestions from "../ShowQuestions";
 const SampleReviewQuestions = [
   {
     id: "question1",

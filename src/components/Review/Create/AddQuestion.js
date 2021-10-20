@@ -1,6 +1,6 @@
 import { Fab, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Classes from "./AddQuestion.module.css";
-import { Colors } from "../UI/colors";
+import { Colors } from "../../UI/colors";
 import { useState, Fragment, useRef } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
@@ -101,7 +101,7 @@ const AddQuestions = (props) => {
     console.log(question);
   };
   return (
-    <Fragment>
+    <div className={Classes['input-div']}>
       <ToggleButtonGroup sx={{ marginBottom: "10%" }}>
         <ToggleButton
           onClick={() => setObjective(true)}
@@ -145,14 +145,17 @@ const AddQuestions = (props) => {
         />
       </Fab>
       {Objective && (
-        <div style={{ width: "80%", margin: "auto" }}>
+        <div
+          style={{ width: "80%", margin: "auto" }}
+         
+        >
           <input type="text" placeholder="Option 1" ref={Option1Ref} />
           <input type="text" placeholder="Option 2" ref={Option2Ref} />
           <input type="text" placeholder="Option 3" ref={Option3Ref} />
           <input type="text" placeholder="Option 4" ref={Option4Ref} />
         </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 

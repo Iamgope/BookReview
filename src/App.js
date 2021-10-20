@@ -10,7 +10,9 @@ import CreateBook from "./Pages/CreateBook";
 import ReviewFrontPage from "./Pages/ReviewFrontPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import BookFrontPage from "./Pages/BookFrontPage";
-import ReviewForm from "./components/Review/ReviewForm";
+import ReviewForm from "./components/Review/Answer/ReviewForm";
+import Header from "./components/Basic/Header";
+import Home from "./Pages/HomePage";
 const App = () => {
   const [open, setOpen] = useState(false);
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -52,13 +54,12 @@ const App = () => {
           username={username}
           isAuthenticated={isAuthenticated}
         />
-
         <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
           <AuthForm handleClose={handleClose} />
         </ModalUI>
         <Switch>
           <Route exact path="/">
-            <ReviewForm />
+<Home/>
           </Route>
           <Route path="/Create">
             <CreateBook />

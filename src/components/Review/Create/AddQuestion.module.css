@@ -1,10 +1,10 @@
 @media only screen and (min-width: 900px) {
-  input {
+  .input-div input {
     font-size: 1.2rem;
     font-weight: 700;
   }
 }
-input {
+.input-div input {
   border: 1px solid transparent;
   color: #002058;
   width: 90%;
@@ -13,12 +13,13 @@ input {
   border-bottom: 1px solid #002058;
 }
 
-input:focus {
+.input-div input:focus {
   outline: none !important;
 }
 @media only screen and (max-width: 600px) {
-  input {
+  .input-div input {
     font-size: 0.7rem;
     font-weight: 400;
   }
 }
+

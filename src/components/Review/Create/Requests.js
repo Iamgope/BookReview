@@ -41,12 +41,27 @@ export default function DataTable() {
     <div
       style={{
         height: 400,
-        width: "100%",
+        width: "80%",
         margin: "auto",
         maxWidth: "80%",
         padding: "3%",
+        textAlign:'center',
+        
       }}
     >
+      <h3>Pending Requests</h3>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        onSelectionModelChange={(itm) => {
+          //const FirstNames=[];
+          console.log(rows.filter((row) => itm.find((it) => it === row.id)).map(row=>row.firstName));
+        }}
+      />
+       <h3>Selected Requests</h3>
       <DataGrid
         rows={rows}
         columns={columns}

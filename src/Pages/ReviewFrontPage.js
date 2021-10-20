@@ -5,9 +5,9 @@ import { useState } from "react";
 // import finish from "../../Media/finish.svg";
 import { Paper, Grid } from "@mui/material";
 import { Colors } from "../components/UI/colors";
-import ReviewForm from "../components/Review/CreateReviewPage";
-import FinishPage from "../components/Review/Finish";
-import DataTable from "../components/Review/Requests";
+import ReviewForm from "../components/Review/Create/CreateReviewPage";
+import FinishPage from "../components/Review/Create/Finish";
+import DataTable from "../components/Review/Create/Requests";
 const ReviewFrontPage = () => {
   const [currPage, setCurrpage] = useState("A");
   let CurrentDisplay;

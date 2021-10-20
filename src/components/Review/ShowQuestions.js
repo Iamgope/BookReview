@@ -72,10 +72,10 @@ const ShowQuestions = (props) => {
   return (
     <>
       <FormControl component="fieldset" sx={{ marginTop: "5%" }}>
-        <h1 >{props.Question.Question}</h1>
-
+        <h1>{props.Question.Question}</h1>
         {SubmissionValue}
       </FormControl>
+      <hr style={{ borderTop: " 1px solid white" }} />
     </>
   );
 };
