@@ -1,7 +1,7 @@
 import { Fab, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Classes from "./AddQuestion.module.css";
 import { Colors } from "../../UI/colors";
-import { useState, Fragment, useRef } from "react";
+import { useState, useRef } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
 // const defaultQuestionState = {

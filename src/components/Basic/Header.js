@@ -1,14 +1,10 @@
 import {
     Fab,
-  Grid,
-  TextField,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { Colors } from "../UI/colors";
 import { makeStyles } from "@mui/styles";
-import write from "../../Media/write.svg";
 import NiceBox from "../UI/BackgroundCard";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 const useStyles = makeStyles((theme) => ({

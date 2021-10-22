@@ -63,7 +63,7 @@ const ReviewForm = () => {
       style={{
         textAlign: "left",
         marginLeft: "5%",
-        color:index===BoxState?'green':Colors.purple
+        color:index===BoxState?Colors.NotDark:Colors.purple
       }}
       onClick={() => setBoxState(index)}
     >

@@ -40,5 +40,9 @@
     transform: rotate(360deg);
   }
 }
+a{
+  color:inherit;
+  text-decoration: none;
+}
 
 

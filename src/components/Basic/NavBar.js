@@ -61,8 +61,7 @@ const NavBar = (props) => {
     FontFamily:'Lato , sans-serif'
   };
   const Logouthandler = () => {
-    localStorage.setItem("access_token", "");
-    localStorage.setItem("refresh_token", "");
+    props.onLogout();
   };
   return (
     <Fragment>
@@ -76,13 +75,19 @@ const NavBar = (props) => {
           ) : (
             <Fragment>
               {!props.isAuthenticated ? (
+                <>
+
                 <Button
                   variant="contained"
-                  sx={{ backgroundColor:`${Colors.LightBlue}`,color:`${Colors.purple}`, textTransform: "none" ,fontWeight:600,fontSize:'1.8  ch',borderRadius:'3ch','&:hover':{background:`${Colors.purple}`,color:`${Colors.LightBlue}`,}}}
+                  sx={{ backgroundColor:`${Colors.LightBlue}`,color:`${Colors.purple}`, textTransform: "none" ,fontWeight:600,fontSize:'1.8  ch',borderRadius:'3ch',}}
                   onClick={props.handleOpen}
                 >
                   Sign In
                 </Button>
+               
+    
+                </>
+
               ) : (
                 <Button
                   variant="contained"

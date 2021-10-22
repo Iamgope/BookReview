@@ -1,10 +1,10 @@
-import { useState } from "react";
+//import { useState } from "react";
 import { Fab } from "@mui/material";
 import NiceBox from "../../UI/BackgroundCard";
 import SendIcon from "@mui/icons-material/Send";
 import { Colors } from "../../UI/colors";
 const FinishPage = () => {
-  const [isThereFile, setIsThereFile] = useState(false);
+  //const [isThereFile, setIsThereFile] = useState(false);
   return (
     <NiceBox
       sx={{ height: "40vh", margin: "auto", marginTop: "5%" ,maxWidth:'max-content'}}

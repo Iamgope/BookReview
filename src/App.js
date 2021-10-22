@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import useSWR from "swr";
+
 import AuthForm from "./Pages/Auth";
 import NavBar from "./components/Basic/NavBar";
 import ModalUI from "./components/UI/Modal";
@@ -9,26 +11,37 @@ import Dashboard from "./Pages/Dashboard";
 import CreateBook from "./Pages/CreateBook";
 import ReviewFrontPage from "./Pages/ReviewFrontPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useHistory } from "react-router";
+
 import BookFrontPage from "./Pages/BookFrontPage";
-import ReviewForm from "./components/Review/Answer/ReviewForm";
-import Header from "./components/Basic/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "./store/slices/auth";
 import Home from "./Pages/HomePage";
+import Footer from "./components/Basic/Footer";
+import { fetcher } from "./components/Api/AxiosApi";
 const App = () => {
+  const dispatch = useDispatch();
+  const account = useSelector((state) => state.auth);
+  console.log("account is ", account);
   const [open, setOpen] = useState(false);
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [username, setUserName] = useState("");
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    const api = `http://127.0.0.1:8000/auth/user/`;
+  const token = useSelector((state) => state.auth.token);
+  const history = useHistory();
+  const {data} = useSWR(`/auth/user/`, fetcher);
+  console.log("Post", data);
 
+  useEffect(() => {
+    
+    const api = `http://127.0.0.1:8000/auth/user/`;
     axios
       .get(api, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         console.log(res.data);
         setUserName(res.data.username);
         setisAuthenticated(true);
-      });
-  }, []);
+      }); 
+  }, [token]);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -45,6 +58,12 @@ const App = () => {
     ISBN_NO: "PUB978-606-722-456-6",
     BookImage: Book003,
   };
+  const onLogout = () => {
+    dispatch(authActions.logout());
+    /// history.push("/")
+    setisAuthenticated(false);
+    setUserName(null);
+  };
   return (
     <Router>
       <main>
@@ -53,13 +72,15 @@ const App = () => {
           handleClose={handleClose}
           username={username}
           isAuthenticated={isAuthenticated}
+          onLogout={onLogout}
         />
         <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
           <AuthForm handleClose={handleClose} />
         </ModalUI>
+        <h1>{username}</h1>
         <Switch>
           <Route exact path="/">
-<Home/>
+            <Home />
           </Route>
           <Route path="/Create">
             <CreateBook />
@@ -67,7 +88,7 @@ const App = () => {
           <Route path="/Profile">
             <Dashboard />
           </Route>
-          <Route path="/Post/1">
+          <Route path={`/Post/:PostId`}>
             <BookFrontPage Book={SampleBook} />
           </Route>
           <Route path="/Review/1">
@@ -75,6 +96,7 @@ const App = () => {
           </Route>
           <Route path="*"></Route>
         </Switch>
+        <Footer />
       </main>
     </Router>
   );
