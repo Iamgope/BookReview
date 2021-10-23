@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <ExploreBooks/>
+      <ExploreBooks />
     </>
   );
 };

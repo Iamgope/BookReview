@@ -1,10 +1,11 @@
-import {ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Box } from "@mui/system";
-import {  useState } from "react";
+import { useState } from "react";
+
 import { Colors } from "../UI/colors";
 import Posts from "./Posts";
-
 const TogglePosts = () => {
+ 
   const [isCurrentBook, setisCurrentBook] = useState(true);
   const NormalCss = {
     width: "40%",
@@ -18,6 +19,7 @@ const TogglePosts = () => {
   };
 
   const PostItems = [1, 2, 3, 4];
+  console.log(PostItems, typeof PostItems);
   return (
     <Box
       sx={{
@@ -71,7 +73,7 @@ const TogglePosts = () => {
           </span>
         </ToggleButton>
       </ToggleButtonGroup>
-      <Posts Posts={PostItems} />
+      <Posts />
     </Box>
   );
 };

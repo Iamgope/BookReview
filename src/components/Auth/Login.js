@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import axiosInstance from "../Api/AxiosApi";
 import { Button, TextField } from "@mui/material";
 import { Colors } from "../UI/colors";
 import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import authSlice from "../../store/slices/auth";
 import { useHistory } from "react-router";
 import { authActions } from "../../store/slices/auth";
 const Login = (props) => {
@@ -36,7 +34,7 @@ const Login = (props) => {
           refreshToken: res.data.refresh,
           //isAuthenticated:true
         })
-        dispatch(authActions.setAccount({name:'aman'}));
+        //dispatch(authActions.setAccount({name:'aman'}));
         // setLoading(false);
         props.handleClose()
        history.push("/Profile");

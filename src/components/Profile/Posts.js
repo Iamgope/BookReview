@@ -1,6 +1,15 @@
-import { Card, Grid } from "@mui/material";
+import { Card, Grid, Box } from "@mui/material";
+import useSWR from "swr";
+import { fetcher } from "../Api/AxiosApi";
+import { Colors } from "../UI/colors";
 const Posts = (props) => {
-  let PostList = props.Posts;
+  const { data } = useSWR(`/MyPosts/`, fetcher);
+  console.log("daaata", data, typeof data);
+  let PostList = [];
+  if (data) {
+    data.map((post) => (PostList = [...PostList, post]));
+    console.log("MyNooks", PostList);
+  }
   if (PostList.length % 3 === 1) {
     PostList = [...PostList, null, null];
   } else if (PostList.length % 3 === 2) {
@@ -11,7 +20,7 @@ const Posts = (props) => {
     <Grid item>
       {Post && (
         <Card sx={{ width: "20vw", height: "20vw", marginBottom: "5%" }}>
-          Post Number{Post}
+          {Post.title}
         </Card>
       )}
       {!Post && (
@@ -27,13 +36,22 @@ const Posts = (props) => {
       )}
     </Grid>
   ));
+  const Display = PostList.length ? (
+    PostGrid
+  ) : (
+    <Box sx={{ width: "100%", height: "30vh" }}>
+      <h1 style={{ color: Colors.NotDark, textAlign: "center" }}>
+        No Posts Available
+      </h1>
+    </Box>
+  );
   return (
     <Grid
       container
       columnSpacing={2}
-      sx={{ margin: "auto", justifyContent: "center" }}
+      sx={{ margin: "auto", justifyContent: "center", marginBottom: "20vh" }}
     >
-      {PostGrid}
+      {Display}
     </Grid>
   );
 };

@@ -5,72 +5,41 @@ import { useState } from "react";
 import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import { Colors } from "../UI/colors";
 import { Link } from "react-router-dom";
-const BookData = [
-  {
-    id: "01",
-    Name: "Norwegien Woods",
-    Author: "haruki murakami",
-    pages: "300",
-    price: 200,
-  },
-  {
-    id: "02",
-    Name: "Kafka on the shore",
-    Author: "Haruki murakami",
-    pages: "350",
-    price: 400,
-  },
-  {
-    id: "03",
-    Name: "A Little Life",
-    Author: "japanui Again",
-    pages: "750",
-    price: 400,
-  },
-  {
-    id: "04",
-    Name: "The Sapiens",
-    Author: "Yuval Noah harari",
-    pages: "490",
-    price: 300,
-  },
-  {
-    id: "05",
-    Name: "Black Holes:BBC lectures",
-    Author: "Hawking",
-    pages: "80",
-    price: 100,
-  },
-  {
-    id: "06",
-    Name: "Black Holes:BBC lectures",
-    Author: "Hawking",
-    pages: "80",
-    price: 100,
-  },
-  {
-    id: "07",
-    Name: "Black Holes:BBC lectures",
-    Author: "Hawking",
-    pages: "80",
-    price: 100,
-  },
-  {
-    id: "08",
-    Name: "Black Holes:BBC lectures",
-    Author: "Hawking",
-    pages: "80",
-    price: 100,
-  },
-  {
-    id: "09",
-    Name: "Black Holes:BBC lectures",
-    Author: "Hawking",
-    pages: "80",
-    price: 100,
-  },
-];
+import useSWR from "swr";
+import { fetcher } from "../Api/AxiosApi";
+
 const CatergoryWiseBooks = (props) => {
+  let BookData = [
+    {
+      id: "01",
+      Name: "Norwegien Woods",
+      Author: "haruki murakami",
+      pages: "300",
+      price: 200,
+    },
+  ];
+  const CategoryNo = props.CategoryNo;
+  const { data } = useSWR(`/postbyCategory/${CategoryNo}/`, fetcher);
+  if (data) {
+    ///console.log(data);
+    data.map(
+      (Book) =>
+        (BookData = [
+          ...BookData,
+          {
+            id: `${Book.title} ${Book.published}`,
+            Name: Book.title,
+            Author: "Aman Gope",
+            price: "200",
+            pages: "200",
+            excerpt: Book.excerpt,
+            status: Book.status,
+            published: Book.published,
+          },
+        ])
+    );
+  console.log(BookData)
+  }
   const CategoryName = props.CategoryName;
 
   const theme = useTheme();
@@ -97,7 +66,7 @@ const CatergoryWiseBooks = (props) => {
             Image={Book003}
             BookName={CurrBookData.Name}
           />
-          <p>{CurrBookData.id}</p>
+         
         </Grid>
       ));
     } else {
@@ -113,7 +82,7 @@ const CatergoryWiseBooks = (props) => {
               Image={Book003}
               BookName={CurrBookData.Name}
             />
-            <p>{CurrBookData.id}</p>
+           
           </Grid>
         );
         BookList = [...BookList, ListItem];
@@ -126,7 +95,7 @@ const CatergoryWiseBooks = (props) => {
       return BookData.map((CurrBookData) => (
         <Grid item sx={{ marginInline: "1%" }}>
           <BookCover key={CurrBookData.id} Image={Book003} />
-          <p>{CurrBookData.id}</p>
+         
         </Grid>
       ));
     } else {
@@ -137,7 +106,6 @@ const CatergoryWiseBooks = (props) => {
         const ListItem = (
           <Grid item sx={{ marginInline: "1%" }}>
             <BookCover key={CurrBookData.id} Image={Book003} />
-            <p>{CurrBookData.id}</p>
           </Grid>
         );
         BookList = [...BookList, ListItem];
@@ -153,7 +121,8 @@ const CatergoryWiseBooks = (props) => {
     else if (currBook + 3 > BookData.length)
       BookList = GiveBookListForSmallScreen("B", BookData.length - 3);
     else BookList = GiveBookListForSmallScreen("B", currBook);
-  } else {
+  } 
+  else {
     if (BookData.length < 5)
       BookList = GiveBookListForLargeScreen("A", currBook);
     else if (currBook + 5 > BookData.length)
@@ -200,7 +169,9 @@ export const BookCover = (props) => {
     <Fragment>
       <img src={props.Image} alt="BookCover" style={ImageCss} />
 
-      <h5 style={{ maxWidth: "12vw", textAlign: "center",color:Colors.purple }}>
+      <h5
+        style={{ maxWidth: "12vw", textAlign: "center", color: Colors.purple }}
+      >
         <Link to={`${url}/${Id}`}>{props.BookName}</Link>
       </h5>
     </Fragment>
