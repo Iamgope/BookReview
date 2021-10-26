@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/slices/auth";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
+import Riview from '../../Media/Riview.png'
 ///import { useTheme } from "@emotion/react";
 ///import { purple } from '@mui/material/colors';
 
@@ -76,6 +77,8 @@ const NavBar = (props) => {
     <Fragment>
       <AppBar color="inherit" position="static" sx={AppBarcss}>
         <Toolbar>
+          <Link to="/">          <img src={Riview} alt="logo" style={{width:'7vw',height:'5ch'}}/>
+</Link>
           <Typography
             variant="h6"
             component="div"

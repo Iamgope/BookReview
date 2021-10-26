@@ -1,12 +1,11 @@
 import {
-    Fab,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { Colors } from "../UI/colors";
 import { makeStyles } from "@mui/styles";
 import NiceBox from "../UI/BackgroundCard";
-import ArrowForward from "@mui/icons-material/ArrowForward";
+import { NextButton } from "../UI/NextPrev";
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: "center",
@@ -37,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
   Input: {
     border: `2px solid ${Colors.purple}`,
     borderRadius: "5ch",
-    padding: "2%",
+    padding: "1.5%",
     width: "60%",
-    fontSize: "20px",
+    fontSize: "0.6ch",
     fontWeight: 600,
     marginTop:'2%'
   },
@@ -55,7 +54,7 @@ const Header = () => {
       style={{ display: isMobile ? "block" : "flex" }}
     >
       <>
-        <span style={{}} className={Classes.heading}>
+        <span className={Classes.heading}>
           <span>We have something to</span>
           <br />
 
@@ -63,9 +62,9 @@ const Header = () => {
           <span>your writing life </span>
           <div style={{ display: "flex" }}>
             <input type="text" className={Classes.Input} />
-            <Fab sx={{margin:'2%',backgroundColor:Colors.NotDark,color:Colors.LightBlue,'&:hover':{background:Colors.purple}}}>
-                <ArrowForward/>
-            </Fab>
+           <div style={{marginInline:'2%'}}>
+            <NextButton/>
+            </div>
           </div>
         </span>
       </>

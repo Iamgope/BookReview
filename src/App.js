@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import useSWR from "swr";
-import axiosInstance from "./components/Api/AxiosApi";
 import AuthForm from "./Pages/Auth";
 import NavBar from "./components/Basic/NavBar";
 import ModalUI from "./components/UI/Modal";

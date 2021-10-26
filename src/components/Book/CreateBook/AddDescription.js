@@ -1,9 +1,8 @@
-import { Fab} from "@mui/material";
 import { Colors } from "../../UI/colors";
 import { Fragment ,useState} from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { CssTextAreaField } from "../../UI/FormInput";
 import { HeadLine1 } from "../../UI/HeadLine";
+import { NextButton, PrevButton } from "../../UI/NextPrev";
 const Description = (props) => {
   const onChangeDescription = (event) => {
     props.setBookDescription(event.target.value);
@@ -41,15 +40,8 @@ const Description = (props) => {
         </h5>
       )}
       <div display="flex">
-        <Fab
-          sx={{
-            background: Colors.purple,
-            "&:hover": { background: Colors.LightBlue },
-          }}
-          onClick={() => props.Dec()}
-        >
-          <ArrowBackIcon sx={{ color: "white", fontSize: "5ch" }} />
-        </Fab>
+       
+        <PrevButton onClick={() => props.Dec()}/>
         <CssTextAreaField
           multiline="True"
           aria-label="minimum height"
@@ -60,21 +52,10 @@ const Description = (props) => {
           value={props.BookDescription}
           sx={{marginInline:'5%'}}
         />
-        <Fab
-          sx={{
-            background: Colors.purple,
-            "&:hover": { background: Colors.LightBlue },
-          }}
-        >
-          <ArrowBackIcon
-            sx={{
-              color: "white",
-              fontSize: "5ch",
-              transform: "rotateY(180deg)",
-            }}
-            onClick={onClickNext}
-          />
-        </Fab>
+      
+          <NextButton  onClick={onClickNext}/>
+          
+        
       </div>
     </Fragment>
   );

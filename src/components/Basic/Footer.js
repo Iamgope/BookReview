@@ -12,7 +12,7 @@ export default function Footer() {
 
   return (
     <BottomNavigation
-      sx={{ background: Colors.Dark }}
+      sx={{ background: Colors.Dark ,marginTop:'10%'}}
       value={value}
       onChange={handleChange}
     ></BottomNavigation>

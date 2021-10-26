@@ -16,7 +16,7 @@ const rootStyle = {
 };
 
 const ImgStyle = {
-  width: 350,
+  width: '92%',
   height: 450,
   marginTop: "3%",
   marginBottom: "2%",
@@ -56,12 +56,7 @@ const BookFrontPage = (props) => {
           />
         </Grid>
         <Grid item>
-          <Info
-            price={props.Book.Price}
-            ISBN_NO={props.Book.ISBN_NO}
-            Pages={props.Book.Pages}
-            Author={props.Book.Author}
-          />
+         
         </Grid>
       </Grid>
       <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>

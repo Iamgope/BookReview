@@ -38,7 +38,7 @@ const CatergoryWiseBooks = (props) => {
           },
         ])
     );
-  console.log(BookData)
+    console.log(BookData);
   }
   const CategoryName = props.CategoryName;
 
@@ -66,7 +66,6 @@ const CatergoryWiseBooks = (props) => {
             Image={Book003}
             BookName={CurrBookData.Name}
           />
-         
         </Grid>
       ));
     } else {
@@ -82,7 +81,6 @@ const CatergoryWiseBooks = (props) => {
               Image={Book003}
               BookName={CurrBookData.Name}
             />
-           
           </Grid>
         );
         BookList = [...BookList, ListItem];
@@ -95,7 +93,6 @@ const CatergoryWiseBooks = (props) => {
       return BookData.map((CurrBookData) => (
         <Grid item sx={{ marginInline: "1%" }}>
           <BookCover key={CurrBookData.id} Image={Book003} />
-         
         </Grid>
       ));
     } else {
@@ -121,8 +118,7 @@ const CatergoryWiseBooks = (props) => {
     else if (currBook + 3 > BookData.length)
       BookList = GiveBookListForSmallScreen("B", BookData.length - 3);
     else BookList = GiveBookListForSmallScreen("B", currBook);
-  } 
-  else {
+  } else {
     if (BookData.length < 5)
       BookList = GiveBookListForLargeScreen("A", currBook);
     else if (currBook + 5 > BookData.length)
@@ -167,10 +163,18 @@ export const BookCover = (props) => {
   const Id = props.id;
   return (
     <Fragment>
-      <img src={props.Image} alt="BookCover" style={ImageCss} />
+      <Link to={`${url}/${Id}`}>
+        {" "}
+        <img src={props.Image} alt="BookCover" style={ImageCss} />
+      </Link>
 
       <h5
-        style={{ maxWidth: "12vw", textAlign: "center", color: Colors.purple }}
+        style={{
+          maxWidth: "10vw",
+          textAlign: "center",
+          color: Colors.purple,
+          padding: "1%",
+        }}
       >
         <Link to={`${url}/${Id}`}>{props.BookName}</Link>
       </h5>

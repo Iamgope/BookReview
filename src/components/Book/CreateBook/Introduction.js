@@ -1,14 +1,12 @@
 import { Fragment, useState } from "react";
 import { CssTextField } from "../../UI/FormInput";
-import { Fab } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import { Colors } from "../../UI/colors";
 import { HeadLine1 } from "../../UI/HeadLine";
-
+import { NextButton } from "../../UI/NextPrev";
 const Introduction = (props) => {
-
   const onChangeName = (event) => {
-    console.log(event.target.value)
+    console.log(event.target.value);
     props.setBookName(event.target.value);
     setisColorRed(false);
   };
@@ -66,21 +64,8 @@ const Introduction = (props) => {
 
           /// InputProps={{className:InputCss}}
         />
-        <Fab
-          sx={{
-            background: Colors.purple,
-            "&:hover": { background: Colors.LightBlue },
-          }}
-          onClick={onClickNext}
-        >
-          <ArrowBackIcon
-            sx={{
-              color: "white",
-              fontSize: "5ch",
-              transform: "rotateY(180deg)",
-            }}
-          />
-        </Fab>
+        <NextButton  onClick={onClickNext}/>
+        
       </div>
     </Fragment>
   );

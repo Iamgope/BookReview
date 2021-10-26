@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
 import { Colors } from "../components/UI/colors";
-import {  useState } from "react";
-import Introduction  from "../components/Book/CreateBook/Introduction";
+import { useState } from "react";
+import Introduction from "../components/Book/CreateBook/Introduction";
 import DeadLine from "../components/Book/CreateBook/DeadLine";
 import Description from "../components/Book/CreateBook/AddDescription";
-
-
+import AddImage from "../components/Book/CreateBook/AddImage";
+import { useSelector } from "react-redux";
+import axiosInstance from "../components/Api/AxiosApi";
 
 /**Description */
 
@@ -14,6 +15,7 @@ const CreateBook = () => {
   const [BookName, setBookName] = useState("");
   const [BookDescription, setBookDescription] = useState("");
   const [BookDeadLine, setBookDeadLine] = useState("");
+  const [BookImage, setBookImage] = useState(null);
 
   const IncreaseStep = () => {
     setstepNo((prev) => prev + 1);
@@ -21,13 +23,31 @@ const CreateBook = () => {
   const DecreaseStep = () => {
     setstepNo((prev) => prev - 1);
   };
-  const onClickSubmit=()=>{
-    console.log({
-      BookName:BookName,
-      BookDescription:BookDescription,
-      BookDeadLine:BookDeadLine
-    })
-  }
+  const Author = useSelector((state) => state.auth.account);
+  /// console.log(Author)
+  let AuthorId;
+  if (Author) AuthorId = Author.id;
+  console.log(AuthorId)
+  const onClickSubmit = () => {
+    const today=new Date();
+    const TodayDate=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    console.log(TodayDate)
+    let form_data = new FormData();
+    form_data.append("title", BookName);
+    form_data.append("category",1);
+    form_data.append("excerpt", BookDescription);
+   form_data.append("ClosingTime", `${BookDeadLine}T23:59:59Z`);
+    form_data.append("BookCoverImage", BookImage);
+    form_data.append("status", "notClosed");
+    form_data.append("published", `${TodayDate}T23:59:59Z`);
+    form_data.append("author", AuthorId);
+    axiosInstance
+      .post("/AddPost/", form_data)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div style={{ maxWidth: 950, margin: "auto", padding: "5%" }}>
       {stepNo === 0 && (
@@ -47,6 +67,13 @@ const CreateBook = () => {
         />
       )}
       {stepNo === 2 && (
+        <AddImage
+          Inc={IncreaseStep}
+          Dec={DecreaseStep}
+          setBookImage={setBookImage}
+        />
+      )}
+      {stepNo === 3 && (
         <DeadLine
           Inc={IncreaseStep}
           Dec={DecreaseStep}
@@ -54,7 +81,7 @@ const CreateBook = () => {
           setBookDeadLine={setBookDeadLine}
         />
       )}
-      {stepNo === 2 && (
+      {stepNo === 3 && (
         <Button
           variant="contained"
           sx={{

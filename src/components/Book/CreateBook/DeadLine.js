@@ -1,15 +1,14 @@
-import { Fab } from "@mui/material";
 import { Colors } from "../../UI/colors";
 import { Fragment } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { CssTextField } from "../../UI/FormInput";
 import { HeadLine1 } from "../../UI/HeadLine";
+import { PrevButton } from "../../UI/NextPrev";
 const DeadLine = (props) => {
   const onChangeDeadLine = (event) => {
     props.setBookDeadLine(event.target.value);
   };
   //current date in js
-  
+
   return (
     <Fragment>
       <HeadLine1>
@@ -34,16 +33,8 @@ const DeadLine = (props) => {
           display: "flex",
         }}
       >
-        <Fab
-          sx={{
-            background: Colors.purple,
-            "&:hover": { background: Colors.LightBlue },
-            marginInline: "1%",
-          }}
-          onClick={() => props.Dec()}
-        >
-          <ArrowBackIcon sx={{ color: "white", fontSize: "5ch" }} />
-        </Fab>
+        <PrevButton onClick={() => props.Dec()} />
+
         <CssTextField
           fullWidth
           type="date"
