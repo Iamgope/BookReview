@@ -3,6 +3,7 @@ import Classes from "./AddQuestion.module.css";
 import { Colors } from "../../UI/colors";
 import { useState, useRef } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import { useParams } from "react-router-dom";
 
 // const defaultQuestionState = {
 //   subjective: true,
@@ -33,6 +34,8 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 //   }
 // };
 const AddQuestions = (props) => {
+  const { ReviewId } = useParams();
+
   //   const [QuestionState, dispatchQuestionAction] = useReducer(
   //     QuestionReducer,
   //     defaultQuestionState
@@ -68,16 +71,22 @@ const AddQuestions = (props) => {
   const onSubmitQuestion = () => {
     const question = Objective
       ? {
-          Question: QuestionTextRef.current.value,
-          type: "Objective",
+          question: QuestionTextRef.current.value,
+          type: "objective",
           option1: Option1Ref.current.value,
           option2: Option2Ref.current.value,
           option3: Option3Ref.current.value,
           option4: Option4Ref.current.value,
+          AssociatedPost: ReviewId,
         }
       : {
-          Question: QuestionTextRef.current.value,
-          type: "Subjective",
+          question: QuestionTextRef.current.value,
+          type: "subjective",
+          option1: null,
+          option2: null,
+          option3: null,
+          option4: null,
+          AssociatedPost: ReviewId,
         };
 
     if (question.type === "objective") {
@@ -101,7 +110,7 @@ const AddQuestions = (props) => {
     console.log(question);
   };
   return (
-    <div className={Classes['input-div']}>
+    <div className={Classes["input-div"]}>
       <ToggleButtonGroup sx={{ marginBottom: "10%" }}>
         <ToggleButton
           onClick={() => setObjective(true)}
@@ -145,14 +154,31 @@ const AddQuestions = (props) => {
         />
       </Fab>
       {Objective && (
-        <div
-          style={{ width: "80%", margin: "auto" }}
-         
-        >
-          <input type="text" placeholder="Option 1" ref={Option1Ref} />
-          <input type="text" placeholder="Option 2" ref={Option2Ref} />
-          <input type="text" placeholder="Option 3" ref={Option3Ref} />
-          <input type="text" placeholder="Option 4" ref={Option4Ref} />
+        <div style={{ width: "80%", margin: "auto" }}>
+          <input
+            type="text"
+            placeholder="Option 1"
+            ref={Option1Ref}
+            id="option1"
+          />
+          <input
+            type="text"
+            placeholder="Option 2"
+            ref={Option2Ref}
+            id="option2"
+          />
+          <input
+            type="text"
+            placeholder="Option 3"
+            ref={Option3Ref}
+            id="option3"
+          />
+          <input
+            type="text"
+            placeholder="Option 4"
+            ref={Option4Ref}
+            id="option4"
+          />
         </div>
       )}
     </div>

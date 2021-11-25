@@ -1,12 +1,27 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import axiosInstance from "../Api/AxiosApi";
 import { Colors } from "../UI/colors";
 import Posts from "./Posts";
 const TogglePosts = () => {
- 
+  const [MyPosts, setMyPosts] = useState([]);
+  const [MySubscribedPosts, setMySubscribedPosts] = useState([]);
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      axiosInstance
+        .get("/MyPosts/")
+        .then((res) => setMyPosts(res.data))
+        .catch((err) => console.log(err));
+      axiosInstance
+        .get("SubscribedPosts/")
+        .then((res) => setMySubscribedPosts(res.data))
+        .catch((err) => console.log(err));
+    };
+    fetchMyPosts();
+  }, []);
   const [isCurrentBook, setisCurrentBook] = useState(true);
+
   const NormalCss = {
     width: "40%",
 
@@ -18,8 +33,8 @@ const TogglePosts = () => {
     color: Colors.purple,
   };
 
-  const PostItems = [1, 2, 3, 4];
-  console.log(PostItems, typeof PostItems);
+  ///console.log(MySubscribedPosts);
+
   return (
     <Box
       sx={{
@@ -53,7 +68,7 @@ const TogglePosts = () => {
         >
           <span style={{ fontWeight: "bolder", fontSize: "2ch" }}>
             {" "}
-            Reviewed Books
+            My Books
           </span>
         </ToggleButton>
         <ToggleButton
@@ -69,11 +84,14 @@ const TogglePosts = () => {
         >
           <span style={{ fontWeight: "bolder", fontSize: "2ch" }}>
             {" "}
-            My Books
+            Reviewed Books
           </span>
         </ToggleButton>
       </ToggleButtonGroup>
-      <Posts />
+      {isCurrentBook && <Posts MyPosts={MyPosts} PostLink={"/Review"} />}
+      {!isCurrentBook && (
+        <Posts MyPosts={MySubscribedPosts} PostLink={"/ReviewPost"} />
+      )}
     </Box>
   );
 };

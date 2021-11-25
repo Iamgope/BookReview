@@ -64,7 +64,7 @@ const refreshAuthLogic = async (failedRequest) => {
         }
       )
       .then((resp) => {
-        console.log("yeah", resp.data);
+        //console.log("yeah", resp.data);
         const { access, refresh } = resp.data;
         failedRequest.response.config.headers.Authorization =
           "Bearer " + access;

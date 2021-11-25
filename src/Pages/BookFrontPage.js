@@ -5,7 +5,11 @@ import NiceBox from "../components/UI/BackgroundCard";
 import { MyButton } from "../components/UI/Button";
 import BookRequestPage from "../components/Book/BookRequest";
 import ModalUI from "../components/UI/Modal";
-
+import { useParams } from "react-router";
+import useSWR from "swr";
+import { fetcher } from "../components/Api/AxiosApi";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 /* All The Styles Listed Here*/
 
 const rootStyle = {
@@ -16,7 +20,7 @@ const rootStyle = {
 };
 
 const ImgStyle = {
-  width: '92%',
+  width: "90%",
   height: 450,
   marginTop: "3%",
   marginBottom: "2%",
@@ -28,7 +32,18 @@ const DescriptionStyle = {
 
 /* Main Component The FrontPage of The Book */
 const BookFrontPage = (props) => {
+  const Account = useSelector((state) => state.auth.account);
+  const UserId = Account ? Account.id : "";
+  console.log("userid: ", UserId);
   const [open, setOpen] = useState(false);
+
+  const { PostId } = useParams();
+  const { data } = useSWR(`singlePost/${PostId}/`, fetcher);
+  let Author;
+  if (data) {
+    console.log(data);
+    Author = data.author;
+  }
   const handleOpen = () => {
     setOpen(true);
   };
@@ -39,30 +54,44 @@ const BookFrontPage = (props) => {
     <Fragment>
       <Grid container columnSpacing={5} sx={rootStyle}>
         <Grid item>
-          <ImageView Image={props.Book.BookImage} />
-
-          <MyButton
-            Type="outlined"
-            onClick={() => setOpen(true)}
-            ButtonText="Request Book"
+          <ImageView
+            Image={data ? data.BookCoverImage : props.Book.BookCoverImage}
           />
+
+          {Author === UserId ? (
+           <Link to={`/Review/${PostId}`}>
+           <MyButton
+              Type="outlined"
+             
+              ButtonText="see Book"
+            /></Link>
+            
+          ) : (
+            <MyButton
+              Type="outlined"
+              onClick={() => setOpen(true)}
+              ButtonText="Request Book"
+            />
+          )}
         </Grid>
 
         <Grid item>
           <BookDescription
-            Title={props.Book.BookName}
-            Description={props.Book.Description}
-            Author={props.Book.Author}
+            Title={data ? data.title : ""}
+            Description={data ? data.excerpt : ""}
+            Author={data ? data.authorName : ""}
           />
         </Grid>
-        <Grid item>
-         
-        </Grid>
+        <Grid item></Grid>
       </Grid>
       <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
-        <BookRequestPage handleClose={handleClose} />
+        <BookRequestPage
+          handleClose={handleClose}
+          title={data ? data.title : ""}
+          ImageLink={data ? data.BookCoverImage : props.Book.BookCoverImage}
+          AuthorId={data ? data.id : ""}
+        />
       </ModalUI>
-      ;
     </Fragment>
   );
 };

@@ -3,7 +3,7 @@ import { HeadLine1 } from "../../UI/HeadLine";
 import { Colors } from "../../UI/colors";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { NextButton, PrevButton } from "../../UI/NextPrev";
+import {PrevButton } from "../../UI/NextPrev";
 const Input = styled("input")({
   display: "none",
 });
@@ -55,7 +55,7 @@ const AddImage = (props) => {
             {isUploaded?'Uploaded':'Upload'}
           </Button>
         </label>
-        <NextButton onClick={() => props.Inc()} />
+      
       </div>
     </>
   );

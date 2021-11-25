@@ -16,18 +16,19 @@ const CatergoryWiseBooks = (props) => {
       Author: "haruki murakami",
       pages: "300",
       price: 200,
+      BookCoverImage: Book003,
     },
   ];
   const CategoryNo = props.CategoryNo;
   const { data } = useSWR(`/postbyCategory/${CategoryNo}/`, fetcher);
   if (data) {
-    ///console.log(data);
+    console.log(data);
     data.map(
       (Book) =>
         (BookData = [
           ...BookData,
           {
-            id: `${Book.title} ${Book.published}`,
+            id: Book.id,
             Name: Book.title,
             Author: "Aman Gope",
             price: "200",
@@ -35,6 +36,7 @@ const CatergoryWiseBooks = (props) => {
             excerpt: Book.excerpt,
             status: Book.status,
             published: Book.published,
+            BookCoverImage: Book.BookCoverImage,
           },
         ])
     );
@@ -63,7 +65,7 @@ const CatergoryWiseBooks = (props) => {
           <BookCover
             id={CurrBookData.id}
             key={CurrBookData.id}
-            Image={Book003}
+            Image={CurrBookData.BookCoverImage}
             BookName={CurrBookData.Name}
           />
         </Grid>
@@ -78,7 +80,7 @@ const CatergoryWiseBooks = (props) => {
             <BookCover
               id={CurrBookData.id}
               key={CurrBookData.id}
-              Image={Book003}
+              Image={CurrBookData.BookCoverImage}
               BookName={CurrBookData.Name}
             />
           </Grid>
@@ -92,7 +94,7 @@ const CatergoryWiseBooks = (props) => {
     if (State === "A") {
       return BookData.map((CurrBookData) => (
         <Grid item sx={{ marginInline: "1%" }}>
-          <BookCover key={CurrBookData.id} Image={Book003} />
+          <BookCover key={CurrBookData.id} Image={CurrBookData.BookCoverImage} />
         </Grid>
       ));
     } else {
@@ -102,7 +104,7 @@ const CatergoryWiseBooks = (props) => {
         const CurrBookData = BookData[BookNo + ind];
         const ListItem = (
           <Grid item sx={{ marginInline: "1%" }}>
-            <BookCover key={CurrBookData.id} Image={Book003} />
+            <BookCover key={CurrBookData.id} Image={CurrBookData.BookCoverImage} />
           </Grid>
         );
         BookList = [...BookList, ListItem];
@@ -155,7 +157,7 @@ export default CatergoryWiseBooks;
 /** End of the main Function */
 
 const ImageCss = {
-  maxWidth: "15vw",
+  maxWidth: "10vw",
   height: "20ch",
 };
 export const BookCover = (props) => {

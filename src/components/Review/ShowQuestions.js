@@ -8,7 +8,7 @@ import { Colors } from "../UI/colors";
 const ShowQuestions = (props) => {
   const type = props.Question.type;
   let SubmissionValue = null;
-  if (type === "Objective") {
+  if (type === "objective") {
     const op1 = (
       <FormControlLabel
         value={props.Question.option1}
@@ -70,7 +70,7 @@ const ShowQuestions = (props) => {
   return (
     <>
       <FormControl component="fieldset" sx={{ marginTop: "5%" }}>
-        <h1>{props.Question.Question}</h1>
+        <h1>{props.Question.question}</h1>
         {SubmissionValue}
       </FormControl>
       <hr style={{ borderTop: " 1px solid white" }} />

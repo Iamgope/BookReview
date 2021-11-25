@@ -1,55 +1,81 @@
+import { useState } from "react";
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import axiosInstance from "../../Api/AxiosApi";
+import { Colors } from "../../UI/colors";
+export default function DataTable(props) {
+ /// console.log(props.Requests);
+  const [CurrentSelected, setCurrentSelected] = useState([]);
+  //const [isLoading, setisLoading] = useState(false);
+  const columns = [
+    { field: "id", headerName: "id", width: 70 },
+    { field: "S_No", headerName: "S.No", width: 70 },
+    { field: "Name", headerName: "Name", width: 130 },
+    //{ field: "lastName", headerName: "Last name", width: 130 },
+    {
+      field: "Age",
+      headerName: "Age",
+      type: "number",
+      width: 90,
+    },
+    {
+      field: "Sex",
+      headerName: "Sex/gender",
 
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.getValue(params.id, "firstName") || ""} ${
-        params.getValue(params.id, "lastName") || ""
-      }`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
-
-export default function DataTable() {
+      width: 150,
+    },
+    {
+      field: "BooksReviewed",
+      headerName: "BooksReviewed ",
+      width: 150,
+    },
+  ];
+  let rows = [];
+  //console.log(props.Requests)
+  const AproovedSubscription = props.Requests.filter(
+    (req) => req.isAprooved === true
+  ).length;
+  const NotAprooved= props.Requests.filter((req) => req.isAprooved === false)
+ NotAprooved.map(
+    (Request, ind) =>
+      (rows = [
+        ...rows,
+        {
+          id: ind + 1,
+          S_No: ind + 1,
+          Name: Request.username,
+          Sex: Request.Sex,
+          BooksReviewed: Request.ReviewedPosts,
+          Age: Request.Age,
+        },
+      ])
+  );
+  const onClickSelectedHandler = () => {
+    ///console.log(CurrentSelected,'jj');
+console.log(CurrentSelected)
+    CurrentSelected.map((curr) =>
+      axiosInstance
+        .put(`/singleSubscription/${+curr.id}/`, { ...curr, isAprooved: true })
+        .then((response) => console.log(response))
+    );
+  };
   return (
     <div
       style={{
-        height: 400,
+        height: "60vh",
         width: "80%",
         margin: "auto",
-        maxWidth: "80%",
-        padding: "3%",
-        textAlign:'center',
-        
+        marginTop: "3%",
+        marginBottom: "25ch",
       }}
     >
-      <h3>Pending Requests</h3>
+      <h3 style={{ color: Colors.NotDark }}>
+        Aprooved Requests: {`${AproovedSubscription}`}
+      </h3>
+      <h3 style={{ color: Colors.NotDark }}>
+        Current Requests: {`${+props.Requests.length - +AproovedSubscription}`}
+      </h3>
+
       <DataGrid
         rows={rows}
         columns={columns}
@@ -57,22 +83,18 @@ export default function DataTable() {
         rowsPerPageOptions={[5]}
         checkboxSelection
         onSelectionModelChange={(itm) => {
-          //const FirstNames=[];
-          console.log(rows.filter((row) => itm.find((it) => it === row.id)).map(row=>row.firstName));
+          setCurrentSelected(
+            rows
+              .filter((row) => itm.find((it) => it === row.id))
+              .map((row) => NotAprooved[row.id - 1])
+          );
         }}
       />
-       <h3>Selected Requests</h3>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        onSelectionModelChange={(itm) => {
-          //const FirstNames=[];
-          console.log(rows.filter((row) => itm.find((it) => it === row.id)).map(row=>row.firstName));
-        }}
-      />
+      {CurrentSelected.length ? (
+        <button onClick={onClickSelectedHandler}>ClickMe</button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

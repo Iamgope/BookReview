@@ -7,13 +7,13 @@ import { Fab } from "@mui/material";
 const SampleReviewQuestions = [
   {
     id: "question1",
-    type: "Subjective",
-    Question: "Worst thing about this book?",
+    type: "subjective",
+    question: "Worst thing about this book?",
   },
   {
     id: "question2",
-    type: "Objective",
-    Question: "Most lovable Character?",
+    type: "objective",
+    question: "Most lovable Character?",
     option1: "Jude",
     option2: "Tyler",
     option3: "Sang-Woo",
@@ -21,8 +21,8 @@ const SampleReviewQuestions = [
   },
   {
     id: "question3",
-    type: "Objective",
-    Question: "Most irratating Character among them?",
+    type: "objective",
+    question: "Most irratating Character among them?",
     option1: "Paul",
     option2: "Mccarteny",
     option3: "emma",
@@ -31,12 +31,12 @@ const SampleReviewQuestions = [
   {
     id: "question4",
     type: "Subjective",
-    Question: "what should i change in reference to storyline?",
+    question: "what should i change in reference to storyline?",
   },
   {
     id: "question5",
-    type: "Objective",
-    Question: "Most irratating Character in the entire series?",
+    type: "objective",
+    question: "Most irratating Character in the entire series?",
     option1: "Pau irratati",
     option2: "Mccarteny",
     option3: "emma",
