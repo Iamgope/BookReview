@@ -20,7 +20,7 @@ export const CssTextField = styled(TextField)({
   export const CssTextAreaField = styled(TextareaAutosize)({
     background: "rgba(187, 205, 242, 0.37)",
     border: `3px solid white`,
-    borderRadius: "10%",
+    borderRadius: "0%",
     padding: "5%",
     margin:'auto',
     "&:focus": {

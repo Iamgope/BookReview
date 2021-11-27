@@ -8,9 +8,12 @@ import TheBox from "../TheBox";
 import ShowQuestions from "../ShowQuestions";
 import axiosInstance from "../../Api/AxiosApi";
 import { useParams } from "react-router";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 const ReviewForm = (props) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const {ReviewId}=useParams();
   const QuestionList=props.QuestionList
   const rootStyle = {
@@ -47,12 +50,12 @@ const ReviewForm = (props) => {
     <Fragment>
       <Grid container sx={rootStyle} columnSpacing="10%">
         <Grid item>
-          <NiceBox sx={{ maxWidth: 300, textAlign: "center" }}>
+          <NiceBox sx={{ maxWidth:isMobile? '80vw':'20vw', textAlign: "center" }}>
             <img
               src={props.BookCoverImage}
               alt="bookImage"
               style={{
-               maxWidth:'30vh',
+               maxWidth:'70%',
                 justifyContent: "center",
                 padding: "3%",
                 borderRadius: "10%",
@@ -81,7 +84,7 @@ const ReviewForm = (props) => {
               <AddQuestions onAddQuestions={onAddQuestions} />
             )}
             {BoxState !== "Add" && (
-              <ShowQuestions Question={ReviewQuestions[+BoxState]} />
+              <ShowQuestions Question={ReviewQuestions[+BoxState]} selectedAnswer={(A)=>{}}/>
             )}
           </TheBox>
         </Grid>

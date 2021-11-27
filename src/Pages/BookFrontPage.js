@@ -41,7 +41,7 @@ const BookFrontPage = (props) => {
   const { data } = useSWR(`singlePost/${PostId}/`, fetcher);
   let Author;
   if (data) {
-    console.log(data);
+    //console.log(data);
     Author = data.author;
   }
   const handleOpen = () => {

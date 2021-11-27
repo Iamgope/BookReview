@@ -3,15 +3,89 @@ import { useEffect, useState } from "react";
 import NiceBox from "../components/UI/BackgroundCard";
 import axiosInstance from "../components/Api/AxiosApi";
 import { Colors } from "../components/UI/colors";
-import { Button, Grid, useMediaQuery } from "@mui/material";
+import { Button, Grid, useMediaQuery, Card } from "@mui/material";
 import { useTheme } from "@mui/system";
 import DownloadIcon from "@mui/icons-material/Download";
 import SelectionPaper from "../components/UI/selectionPaper";
-
+import ReviewForm from "../components/Review/Answer/ReviewForm";
+import { CssTextAreaField } from "../components/UI/FormInput";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
+export const FinalReview = (props) => {
+  const Author = useSelector((state) => state.auth.account);
+  const SubscriptionId = props.SubscriptionId;
+  /// console.log(Author)
+  let AuthorId;
+  let AuthorName;
+  if (Author) AuthorId = Author.id;
+  if (Author) AuthorName = Author.username;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const TextRef = useRef("");
+  const [selectedText, setSelectedText] = useState("");
+  const onChangeText = () => {
+    setSelectedText(TextRef.current.value);
+  };
+  const onSubmitHandler = async () => {
+    const Data = {
+      Response: selectedText,
+      User: AuthorId,
+      username: AuthorName,
+      isLiked: false,
+      AssociatedPost: props.AssociatedPost,
+    };
+    await axiosInstance
+      .post("/FinalResponse/", Data)
+      .then((res) => console.log(res.data))
+      .then(
+        axiosInstance
+          .patch(`/singleSubscription/${SubscriptionId}/`, { reviewed: true })
+          .then((res) => console.log(res.data))
+          .catch((err) => console.log(err.message))
+      );
+  };
+  return (
+    <>
+      <h3 style={{ color: Colors.purple }}>
+        Please give final wholesome review of the entire Book?
+      </h3>
+      <CssTextAreaField
+        multiline="True"
+        aria-label="minimum height"
+        minRows="7"
+        ref={TextRef}
+        onChange={onChangeText}
+        placeholder="Final Wholesome Review ..."
+        style={{
+          width: isMobile ? "75vw" : "40vw",
+          height: "50vh",
+          overflowY: "scroll",
+          background: "white",
+        }}
+      />
+      <Button
+        variant="contained"
+        sx={{
+          display: "block",
+          margin: "auto",
+          marginTop: "2%",
+          background: Colors.purple,
+        }}
+        onClick={onSubmitHandler}
+      >
+        Submit
+      </Button>
+    </>
+  );
+};
 const ForReviewPage = () => {
   const { ReviewPostId } = useParams();
   const myArray = ReviewPostId.split("-");
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const [currPage, setCurrPage] = useState("A");
   const PostId = +myArray[1];
   const SubscriptionId = +myArray[0];
   //console.log(PostId,SubscriptionId)
@@ -20,29 +94,30 @@ const ForReviewPage = () => {
   const [PostData, setPostData] = useState(null);
   const [isThereError, setisThereError] = useState(0);
   const [MySubscribedPosts, setMySubscribedPosts] = useState([]);
-  //  const { data } = useSWR(`singlePost/${PostId}/`, fetcher);
 
   useEffect(() => {
-
-   
-
     async function Fetcher() {
       await axiosInstance
         .get("/SubscribedPosts/")
-        .then((res) => {setMySubscribedPosts(res.data)})
-        .catch((err) => setisThereError(true));
+        .then((res) => {
+          setMySubscribedPosts(res.data);
+        })
+        .then(
+          axiosInstance
+            .get(`/singlePost/${PostId}/`)
+            .then((res) => setPostData(res.data))
+            .catch((err) => setisThereError(1))
+        )
+        .then(
+          axiosInstance
+            .get(`/singleSubscription/${SubscriptionId}/`)
+            .then((res) => setSubscriptionData(res.data))
+        )
+        .catch((err) => setisThereError(1));
 
-      await axiosInstance
-        .get(`/singlePost/${PostId}/`)
-        .then((res) => setPostData(res.data))
-        .catch((err) =>setisThereError(1));
-      await axiosInstance
-        .get(`singleSubscription/${SubscriptionId}/`)
-        .then((res) => setSubscriptionData(res.data)).catch(err=>setisThereError(1));
+      //console.log(, "helllw");
+    }
 
-        //console.log(, "helllw");
-      }
-    
     Fetcher();
   }, []);
 
@@ -53,19 +128,43 @@ const ForReviewPage = () => {
     isPublished = PostData.isPublished;
     PDFlink = PostData.PostData;
   }
- 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [currPage, setCurrPage] = useState("A");
   if (isThereError) {
-    return <h1 style={{textAlign:'center'}}>Some error has happended</h1>
+    return (
+      <h3
+        style={{ textAlign: "center", marginBottom: "40vh", marginTop: "40vh" }}
+      >
+        Please check your url or internet connection,or maybe there is something
+        wrong in the server
+      </h3>
+    );
   }
-  if(MySubscribedPosts){
-    if(!MySubscribedPosts.find(post=>post.id===SubscriptionId)){
-      return <h1 style={{textAlign:'center'}}>UnAuthorized Page for you !</h1>
+  if (MySubscribedPosts) {
+    if (!MySubscribedPosts.find((post) => post.id === SubscriptionId)) {
+      return (
+        <h3
+          style={{
+            textAlign: "center",
+            marginBottom: "40vh",
+            marginTop: "40vh",
+          }}
+        >
+          UnAuthorized Page for you !
+        </h3>
+      );
     }
   }
+  if (SubscriptionData && SubscriptionData.reviewed) {
+    console.log(SubscriptionData);
+    return (
+      <h3
+        style={{ textAlign: "center", marginBottom: "40vh", marginTop: "40vh" }}
+      >
+        You have already responded
+      </h3>
+    );
+  }
+
   return (
     <>
       <img
@@ -93,17 +192,22 @@ const ForReviewPage = () => {
           sx={{
             textAlign: "center",
             justifyContent: "center",
-            margin: "auto",
+            //margin: "auto",
           }}
         >
-          <Grid item>
+          <Grid item sx={{ marginTop: "3%" }}>
             <SelectionPaper currPage={currPage === "A"}>
-              <h3 onClick={() => setCurrPage("A")}>View Book for Review</h3>
+              <h4 onClick={() => setCurrPage("A")}>View Book for Review</h4>
             </SelectionPaper>
           </Grid>
-          <Grid item>
+          <Grid item sx={{ marginTop: "3%" }}>
             <SelectionPaper currPage={currPage === "B"}>
-              <h3 onClick={() => setCurrPage("B")}>View Review Questions</h3>
+              <h4 onClick={() => setCurrPage("B")}>View Review Questions</h4>
+            </SelectionPaper>
+          </Grid>
+          <Grid item sx={{ marginTop: "3%" }}>
+            <SelectionPaper currPage={currPage === "C"}>
+              <h4 onClick={() => setCurrPage("C")}>Final Review and Submit </h4>
             </SelectionPaper>
           </Grid>
         </Grid>
@@ -135,8 +239,23 @@ const ForReviewPage = () => {
                 </Button>{" "}
               </a>
             </>
+          ) : currPage === "B" ? (
+            <Card
+              sx={{
+                borderRadius: "3ch",
+                maxWidth: isMobile ? "150%" : "90%",
+                margin: "auto",
+              }}
+            >
+              <ReviewForm PostId={+PostId} />
+            </Card>
           ) : (
-            ""
+            <>
+              <FinalReview
+                SubscriptionId={SubscriptionId}
+                AssociatedPost={+PostId}
+              />
+            </>
           )
         ) : (
           <h2 style={{ color: Colors.NotDark }}>Yet To Be Posted</h2>

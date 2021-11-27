@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Paper, Grid } from "@mui/material";
-import { Colors } from "../UI/colors";
+import { Grid } from "@mui/material";
 import ReviewForm from "./Create/CreateReviewPage";
 import FinishPage from "./Create/Finish";
 import DataTable from "./Create/Requests";
 import SelectionPaper from "../UI/selectionPaper";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/system";
 const ReviewFrontPage = (props) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const ReviewId = props.ReviewId;
   const PostQuestionData = props.PostQuestionData;
 
@@ -33,14 +37,20 @@ const ReviewFrontPage = (props) => {
         <>
           <Grid item sx={{ marginInline: "1%" }}>
             <SelectionPaper currPage={currPage === "A"}>
-              <h3 style={{ fontSize: "2vh" }} onClick={() => setCurrpage("A")}>
+              <h3
+                style={{ fontSize: isMobile ? "1.3ch" : "2vh" }}
+                onClick={() => setCurrpage("A")}
+              >
                 View Requests
               </h3>
             </SelectionPaper>
           </Grid>
           <Grid item sx={{ marginInline: "1%" }}>
             <SelectionPaper currPage={currPage === "B"}>
-              <h3 style={{ fontSize: "2vh" }} onClick={() => setCurrpage("B")}>
+              <h3
+                style={{ fontSize: isMobile ? "1.3ch" : "2vh" }}
+                onClick={() => setCurrpage("B")}
+              >
                 Add Questions
               </h3>
             </SelectionPaper>
@@ -48,14 +58,16 @@ const ReviewFrontPage = (props) => {
           <Grid item sx={{ marginInline: "1%" }}>
             <SelectionPaper currPage={currPage === "C"}>
               <h3
-                style={{ fontSize: "2vh" }}
+                style={{ fontSize: isMobile ? "1.3ch" : "2vh" }}
                 onClick={() => setCurrpage("C")}
               >{`Upload & Finish`}</h3>
             </SelectionPaper>
           </Grid>
         </>
       </Grid>
+      
       {CurrentDisplay}
+
     </>
   );
 };

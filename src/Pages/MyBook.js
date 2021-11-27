@@ -10,7 +10,7 @@ const MyBook = () => {
   const [isLoading, setisLoading] = useState(false);
   const [PostRequests, setPostRequests] = useState([]);
   const [PostQuestionData, setPostQuestionData] = useState([]);
-
+  const [MyPosts, setMyPosts] = useState([]);
   useEffect(() => {
     async function fetchPostData() {
       setisLoading(true);
@@ -27,12 +27,16 @@ const MyBook = () => {
         .get(`/singlePost/${ReviewId}/`)
         .then((res) => setPostData(res.data))
         .catch((err) => console.log(err));
+
+      await axiosInstance.get("/MyPosts/").then((res) => setMyPosts(res.data));
       setisLoading(false);
     }
 
     fetchPostData();
   }, [ReviewId]);
   const LoadingVal = <h3 style={{ textAlign: "center" }}>Loading....</h3>;
+  if (!MyPosts.find((post) => +post.id === +ReviewId))
+    return <h1 style={{ textAlign: "center" }}>UnAuthorized page </h1>;
 
   return (
     <>
@@ -47,8 +51,7 @@ const MyBook = () => {
         {PostData ? (
           +PostData.isPublished ? (
             <>
-              
-             <AnalysisPage PostQuestionData={PostQuestionData}/>
+              <AnalysisPage PostQuestionData={PostQuestionData} />
             </>
           ) : (
             <ReviewFrontPage

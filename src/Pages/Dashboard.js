@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import ProfileDetails from "../components/Profile/ProfileDetails";
 import TogglePosts from "../components/Profile/TogglePosts";
 import { useSelector } from "react-redux";
-
 const Dashboard = () => {
   // useEffect(() => {
   //   const token = localStorage.getItem("access_token");

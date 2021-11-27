@@ -4,7 +4,12 @@ import NiceBox from "../../UI/BackgroundCard";
 import SendIcon from "@mui/icons-material/Send";
 import { Colors } from "../../UI/colors";
 import axiosInstance from "../../Api/AxiosApi";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/system";
 const FinishPage = (props) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const [TheFile, setTheFile] = useState(null);
   const onBookChangehandler = (e) => {
     //let form_data = new FormData();
@@ -13,14 +18,6 @@ const FinishPage = (props) => {
   const onSubmitForm = () => {
     let form_data = new FormData();
     form_data.append("PostData", TheFile);
-    // form_data.append("category", 1);
-    // form_data.append("title", props.PostData.title);
-    // form_data.append("BookCoverImage", props.PostData.BookCoverImage);
-    // form_data.append("status", "Closed");
-    // form_data.append("published", props.PostData.published);
-    // form_data.append("author", props.PostData.author);
-    // form_data.append("authorName", props.PostData.authorName);
-    // form_data.append("excerpt", props.PostData.excerpt);
     form_data.append("isPublished", true);
 
     console.log(props.PostData);
@@ -31,34 +28,40 @@ const FinishPage = (props) => {
       .catch((err) => console.log(err));
   };
   return (
-    <NiceBox
-      sx={{
-        height: "40vh",
-        margin: "auto",
-        marginTop: "5%",
-        maxWidth: "max-content",
-      }}
-    >
-      <input
-        type="file"
-        onChange={onBookChangehandler}
-        style={{ fontSize: "2ch" }}
-      />
-
-      <Fab
-        color="primary"
-        component="span"
-        aria-label="add"
+    <div style={{ justifyContent: "center" }}>
+      <NiceBox
         sx={{
-          display: "flex",
+          maxWidth: isMobile ? "70vw" : "50vw",
+          textAlign: "center",
           margin: "auto",
-          marginTop: "10%",
-          background: Colors.purple,
+          marginTop: "5%",
         }}
       >
-        <SendIcon onClick={onSubmitForm} />
-      </Fab>
-    </NiceBox>
+        <input
+          type="file"
+          onChange={onBookChangehandler}
+          style={{
+            fontSize: isMobile ? "1.2ch" : "2ch",
+            justifyContent: "center",
+            maxWidth: "80%",
+          }}
+        />
+
+        <Fab
+          color="primary"
+          component="span"
+          aria-label="add"
+          sx={{
+            display: "flex",
+            margin: "auto",
+            marginTop: "10%",
+            background: Colors.purple,
+          }}
+        >
+          <SendIcon onClick={onSubmitForm} />
+        </Fab>
+      </NiceBox>
+    </div>
   );
 };
 
