@@ -53,20 +53,22 @@ const Introduction = (props) => {
           label="Name of your Book"
           id="Name_of_the_book"
           sx={{
-            marginInline: "2%",
+            marginInline: "5%",
             borderRadius: "2ch",
             [`& fieldset`]: {
               borderRadius: 15,
             },
+            //marginInline:'3%'
           }}
           onChange={onChangeName}
           value={props.BookName}
 
           /// InputProps={{className:InputCss}}
         />
-        <NextButton  onClick={onClickNext}/>
-        
+
+        <NextButton onClick={onClickNext} />
       </div>
+      <div></div>
     </Fragment>
   );
 };

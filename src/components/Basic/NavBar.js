@@ -13,16 +13,12 @@ import {
 } from "@mui/material";
 import { Colors } from "../UI/colors";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { authActions } from "../../store/slices/auth";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
-import Riview from '../../Media/Riview.png'
-///import { useTheme } from "@emotion/react";
-///import { purple } from '@mui/material/colors';
-
-//makeStyles
-//import makeStyles from '@mui/styles'
+import Riview from "../../Media/Riview.png";
+import { useHistory } from "react-router";
 
 export const DrawerComponet = (props) => {
   const [OpenDrawer, setOpenDrawer] = useState(false);
@@ -59,8 +55,10 @@ export const DrawerComponet = (props) => {
 };
 
 const NavBar = (props) => {
-  const Account = useSelector((state) => state.auth.account);
-  const isAuthenticated = Account ? (Account.username ? true : false) : false;
+  const history = useHistory();
+
+  const Account = props.AccountDetails;
+  //const isAuthenticated = Account ? (Account.username ? true : false) : false;
   const username = Account ? Account.username : "";
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -72,13 +70,25 @@ const NavBar = (props) => {
   };
   const Logouthandler = () => {
     dispatch(authActions.logout());
+    props.setAccountDetails({
+      email: null,
+      id: null,
+      username: null,
+    });
+    history.push("/");
   };
   return (
     <Fragment>
       <AppBar color="inherit" position="static" sx={AppBarcss}>
         <Toolbar>
-          <Link to="/">          <img src={Riview} alt="logo" style={{width:'7vw',height:'5ch'}}/>
-</Link>
+          <Link to="/">
+            {" "}
+            <img
+              src={Riview}
+              alt="logo"
+              style={{ width: "7vw", height: "5ch" }}
+            />
+          </Link>
           <Typography
             variant="h6"
             component="div"
@@ -89,7 +99,7 @@ const NavBar = (props) => {
             <DrawerComponet handleOpen={props.handleOpen} />
           ) : (
             <Fragment>
-              {!isAuthenticated ? (
+              {!Account.username ? (
                 <>
                   <Button
                     variant="contained"
@@ -110,7 +120,9 @@ const NavBar = (props) => {
                 <>
                   <Link to="/Profile">
                     {" "}
-                    <Avatar sx={{ fontSize: "1.5vw" }}>{username[0]}</Avatar>
+                    <Avatar sx={{ fontSize: "1.5vw" }}>
+                      {username ? username[0] : ""}
+                    </Avatar>
                   </Link>
                   <Button
                     variant="contained"

@@ -5,8 +5,8 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import store from "../../store";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000",
-  timeout: 5000,
+  baseURL: "https://djangobookreview.herokuapp.com",
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -43,8 +43,8 @@ axiosInstance.interceptors.response.use(
     console.debug(
       "[Response]",
       err.config.baseURL + err.config.url,
-      err.response.status,
-      err.response.data
+      //err.response.status,
+      //err.response.data
     );
     return Promise.reject(err);
   }
@@ -60,7 +60,7 @@ const refreshAuthLogic = async (failedRequest) => {
           refresh: refreshToken,
         },
         {
-          baseURL: "http://localhost:8000/",
+          baseURL: "https://djangobookreview.herokuapp.com",
         }
       )
       .then((resp) => {

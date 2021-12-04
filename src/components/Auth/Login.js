@@ -11,53 +11,31 @@ const Login = (props) => {
   const history = useHistory();
   const [UserName, setUserName] = useState("");
   const [Password, setPassword] = useState("");
-  ////const [Open, setOpen] = useState(false);
+  // const [Error, setError] = useState(null);
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-    // console.log(UserName,Password);
-    //return;
 
     const loginBody = { username: UserName, password: Password };
 
-    axios
-      .post("http://localhost:8000/auth/login/", loginBody)
+    await axios
+      .post("https://djangobookreview.herokuapp.com/auth/login/", loginBody)
       .then((res) => {
         dispatch(
           authActions.setAuthTokens({
             token: res.data.access,
             refreshToken: res.data.refresh,
-            //isAuthenticated:true 
           })
         );
-        console.log('hello',{
+
+        console.log("hello", {
           token: res.data.access,
           refreshToken: res.data.refresh,
-          //isAuthenticated:true
-        })
-        //dispatch(authActions.setAccount({name:'aman'}));
-        // setLoading(false);
-        props.handleClose()
-       history.push("/Profile");
-      })
-      .catch((err) => {
-        console.log(err);
-        // setMessage(err.response.data.detail.toString());
-      });
+        });
 
-    // try {
-    //   const response = await axiosInstance.post("/auth/login/", {
-    //     username: UserName,
-    //     password: Password,
-    //   });
-    //   axiosInstance.defaults.headers["Authorization"] =
-    //     "JWT " + response.data.access;
-    //   localStorage.setItem("access_token", response.data.access);
-    //   localStorage.setItem("refresh_token", response.data.refresh);
-    //   props.handleClose();
-    //   return response;
-    // } catch (error) {
-    //   throw error;
-    // }
+        props.handleClose();
+        history.push("/profile");
+      })
+      .catch((err) => props.setAuthError(true));
   };
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -66,17 +44,6 @@ const Login = (props) => {
     setPassword(event.target.value);
   };
 
-  //   const LoginPersonBox = {
-  //     background: Colors.purple,
-  //     color: "white",
-  //     width: 70,
-  //     height: 70,
-  //     boxShadow: "none",
-  //     marginLeft: 'auto',
-  //     marginRight: 'auto',
-  //     display:'block'
-  //   //  marginLeft: "40%",
-  //   };
   return (
     <>
       <form onSubmit={handleSubmitForm}>

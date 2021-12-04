@@ -10,6 +10,8 @@ import useSWR from "swr";
 import { fetcher } from "../components/Api/AxiosApi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+import Book003 from '../Media/Book003.png'
 /* All The Styles Listed Here*/
 
 const rootStyle = {
@@ -34,6 +36,7 @@ const DescriptionStyle = {
 const BookFrontPage = (props) => {
   const Account = useSelector((state) => state.auth.account);
   const UserId = Account ? Account.id : "";
+  
   console.log("userid: ", UserId);
   const [open, setOpen] = useState(false);
 
@@ -41,7 +44,7 @@ const BookFrontPage = (props) => {
   const { data } = useSWR(`singlePost/${PostId}/`, fetcher);
   let Author;
   if (data) {
-    //console.log(data);
+    
     Author = data.author;
   }
   const handleOpen = () => {
@@ -55,17 +58,13 @@ const BookFrontPage = (props) => {
       <Grid container columnSpacing={5} sx={rootStyle}>
         <Grid item>
           <ImageView
-            Image={data ? data.BookCoverImage : props.Book.BookCoverImage}
+            Image={data?`https://res.cloudinary.com/iamgope/${data.BookCoverImage}`:Book003}
           />
 
           {Author === UserId ? (
-           <Link to={`/Review/${PostId}`}>
-           <MyButton
-              Type="outlined"
-             
-              ButtonText="see Book"
-            /></Link>
-            
+            <Link to={`/Review/${PostId}`}>
+              <MyButton Type="outlined" ButtonText="see Book" />
+            </Link>
           ) : (
             <MyButton
               Type="outlined"

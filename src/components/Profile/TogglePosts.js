@@ -1,25 +1,13 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState, useEffect } from "react";
-import axiosInstance from "../Api/AxiosApi";
+import { useState } from "react";
+
 import { Colors } from "../UI/colors";
 import Posts from "./Posts";
-const TogglePosts = () => {
-  const [MyPosts, setMyPosts] = useState([]);
-  const [MySubscribedPosts, setMySubscribedPosts] = useState([]);
-  useEffect(() => {
-    const fetchMyPosts = async () => {
-      axiosInstance
-        .get("/MyPosts/")
-        .then((res) => setMyPosts(res.data))
-        .catch((err) => console.log(err));
-      axiosInstance
-        .get("SubscribedPosts/")
-        .then((res) => setMySubscribedPosts(res.data))
-        .catch((err) => console.log(err));
-    };
-    fetchMyPosts();
-  }, []);
+const TogglePosts = (props) => {
+  const MyPosts = props.MyPosts;
+  const MySubscribedPosts = props.MySubscribedPosts;
+
   const [isCurrentBook, setisCurrentBook] = useState(true);
 
   const NormalCss = {

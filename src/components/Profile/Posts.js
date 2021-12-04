@@ -1,5 +1,5 @@
 import { Card, Grid, Box } from "@mui/material";
-
+import Book003 from '../../Media/Book003.png'
 import { Colors } from "../UI/colors";
 import { Link } from "react-router-dom";
 
@@ -33,7 +33,7 @@ const Posts = (props) => {
               }`}
             >
               <img
-                src={Post.BookCoverImage}
+                src={`https://res.cloudinary.com/iamgope/${Post.BookCoverImage}`}
                 alt={Post.title}
                 style={{
                   width: "85%",

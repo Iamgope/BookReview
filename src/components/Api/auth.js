@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "localhost:8000";
+const BASE_URL = "https://djangobookreview.herokuapp.com";
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
 

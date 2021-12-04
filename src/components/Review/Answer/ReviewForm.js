@@ -37,7 +37,7 @@ const ReviewForm = (props) => {
       });
     }
     Fetch();
-  }, []);
+  }, [PostId]);
 
   const selectedAnswer = (Ans) => {
     if (Ans) {

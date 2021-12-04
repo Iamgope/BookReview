@@ -6,6 +6,7 @@ import DataTable from "./Create/Requests";
 import SelectionPaper from "../UI/selectionPaper";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
+
 const ReviewFrontPage = (props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -24,7 +25,7 @@ const ReviewFrontPage = (props) => {
     CurrentDisplay = (
       <ReviewForm
         QuestionList={PostQuestionData}
-        BookCoverImage={postData.BookCoverImage}
+        BookCoverImage={`https://res.cloudinary.com/iamgope/${postData.BookCoverImage}`}
       />
     );
   } else if (currPage === "C") {

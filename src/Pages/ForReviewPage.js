@@ -11,6 +11,8 @@ import ReviewForm from "../components/Review/Answer/ReviewForm";
 import { CssTextAreaField } from "../components/UI/FormInput";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
+
 export const FinalReview = (props) => {
   const Author = useSelector((state) => state.auth.account);
   const SubscriptionId = props.SubscriptionId;
@@ -81,6 +83,7 @@ export const FinalReview = (props) => {
 const ForReviewPage = () => {
   const { ReviewPostId } = useParams();
   const myArray = ReviewPostId.split("-");
+  const [isLoading, setisLoading] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -97,8 +100,9 @@ const ForReviewPage = () => {
 
   useEffect(() => {
     async function Fetcher() {
+      setisLoading(true);
       await axiosInstance
-        .get("/SubscribedPosts/")
+        .get("/Aprooved_subscribtions/")
         .then((res) => {
           setMySubscribedPosts(res.data);
         })
@@ -114,12 +118,12 @@ const ForReviewPage = () => {
             .then((res) => setSubscriptionData(res.data))
         )
         .catch((err) => setisThereError(1));
-
+      setisLoading(false);
       //console.log(, "helllw");
     }
 
     Fetcher();
-  }, []);
+  }, [PostId, SubscriptionId]);
 
   let PostImage, PostTitle, isPublished, PDFlink;
   if (PostData) {
@@ -128,7 +132,15 @@ const ForReviewPage = () => {
     isPublished = PostData.isPublished;
     PDFlink = PostData.PostData;
   }
-
+  if (isLoading) {
+    return (
+      <h3
+        style={{ textAlign: "center", marginBottom: "40vh", marginTop: "40vh" }}
+      >
+        <CircularProgress />
+      </h3>
+    );
+  }
   if (isThereError) {
     return (
       <h3
@@ -149,10 +161,13 @@ const ForReviewPage = () => {
             marginTop: "40vh",
           }}
         >
-          UnAuthorized Page for you !
+          Request Not Aprooved or check if you are logged in
         </h3>
       );
     }
+    // else if((MySubscribedPosts.find((post) => post.id === SubscriptionId))&&!(MySubscribedPosts.find((post) => post.id === SubscriptionId)).isAprooved){
+    //  return <h3>Sorry You were not aprooved</h3>
+    // }
   }
   if (SubscriptionData && SubscriptionData.reviewed) {
     console.log(SubscriptionData);
@@ -192,7 +207,7 @@ const ForReviewPage = () => {
           sx={{
             textAlign: "center",
             justifyContent: "center",
-            //margin: "auto",
+            
           }}
         >
           <Grid item sx={{ marginTop: "3%" }}>

@@ -4,6 +4,8 @@ import axiosInstance from "../components/Api/AxiosApi";
 import { useParams } from "react-router";
 import { Colors } from "../components/UI/colors";
 import AnalysisPage from "../components/Review/Analysis/AnalysisPage";
+import CircularProgress from '@mui/material/CircularProgress';
+
 const MyBook = () => {
   const { ReviewId } = useParams();
   const [PostData, setPostData] = useState(null);
@@ -34,13 +36,21 @@ const MyBook = () => {
 
     fetchPostData();
   }, [ReviewId]);
-  const LoadingVal = <h3 style={{ textAlign: "center" }}>Loading....</h3>;
+  const LoadingVal = (
+    <h3
+      style={{ textAlign: "center", marginTop: "40vh", marginBottom: "40vh" }}
+    >
+      <CircularProgress/>
+    </h3>
+  );
+  if (isLoading) {
+    return LoadingVal;
+  }
   if (!MyPosts.find((post) => +post.id === +ReviewId))
     return <h1 style={{ textAlign: "center" }}>UnAuthorized page </h1>;
 
   return (
     <>
-      {isLoading && LoadingVal}
       <>
         <h1
           style={{ color: Colors.purple, textAlign: "center", padding: "3%" }}
@@ -51,7 +61,7 @@ const MyBook = () => {
         {PostData ? (
           +PostData.isPublished ? (
             <>
-              <AnalysisPage PostQuestionData={PostQuestionData} />
+              <AnalysisPage PostQuestionData={PostQuestionData} ReviewId={ReviewId} />
             </>
           ) : (
             <ReviewFrontPage

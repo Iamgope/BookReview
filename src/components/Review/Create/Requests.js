@@ -3,15 +3,13 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axiosInstance from "../../Api/AxiosApi";
 import { Colors } from "../../UI/colors";
+import { Button } from "@mui/material";
 export default function DataTable(props) {
- /// console.log(props.Requests);
   const [CurrentSelected, setCurrentSelected] = useState([]);
-  //const [isLoading, setisLoading] = useState(false);
   const columns = [
     { field: "id", headerName: "id", width: 70 },
     { field: "S_No", headerName: "S.No", width: 70 },
     { field: "Name", headerName: "Name", width: 130 },
-    //{ field: "lastName", headerName: "Last name", width: 130 },
     {
       field: "Age",
       headerName: "Age",
@@ -31,7 +29,7 @@ export default function DataTable(props) {
     },
   ];
   let rows = [];
-  //console.log(props.Requests)
+
   const AproovedSubscription = props.Requests.filter(
     (req) => req.isAprooved === true
   ).length;
@@ -50,13 +48,13 @@ export default function DataTable(props) {
         },
       ])
   );
-  const onClickSelectedHandler = () => {
-    ///console.log(CurrentSelected,'jj');
-console.log(CurrentSelected)
-    CurrentSelected.map((curr) =>
+  const onClickSelectedHandler = async() => {
+///console.log(CurrentSelected)
+     CurrentSelected.map((curr) =>
       axiosInstance
         .put(`/singleSubscription/${+curr.id}/`, { ...curr, isAprooved: true })
-        .then((response) => console.log(response))
+        .then((response) => console.log(response)).then( setTimeout(window.location.reload(), 10000)
+        )
     );
   };
   return (
@@ -91,7 +89,8 @@ console.log(CurrentSelected)
         }}
       />
       {CurrentSelected.length ? (
-        <button onClick={onClickSelectedHandler}>ClickMe</button>
+        <Button variant="contained" onClick={onClickSelectedHandler} sx={{display:'block',margin:'auto',marginTop:'2%'}}>Aproove</Button>
+       
       ) : (
         ""
       )}

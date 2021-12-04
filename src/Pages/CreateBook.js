@@ -16,7 +16,7 @@ const CreateBook = () => {
   const [BookName, setBookName] = useState("");
   const [BookDescription, setBookDescription] = useState("");
   const [BookImage, setBookImage] = useState(null);
-
+  const [Category, setCategory] = useState(1);
   const IncreaseStep = () => {
     setstepNo((prev) => prev + 1);
   };
@@ -28,7 +28,7 @@ const CreateBook = () => {
   let AuthorId;
   let AuthorName;
   if (Author) AuthorId = Author.id;
-  console.log(AuthorId);
+  //console.log(AuthorId);
   if (Author) AuthorName = Author.username;
 
   const onClickSubmit = () => {
@@ -42,15 +42,15 @@ const CreateBook = () => {
     console.log(TodayDate);
     let form_data = new FormData();
     form_data.append("title", BookName);
-    form_data.append("category", 1);
+    form_data.append("category", +Category);
     form_data.append("excerpt", BookDescription);
-    //form_data.append("ClosingTime", `${BookDeadLine}T23:59:59Z`);
+    form_data.append("isPublishd", false);
     form_data.append("BookCoverImage", BookImage);
     form_data.append("status", "notClosed");
     form_data.append("published", `${TodayDate}T23:59:59Z`);
     form_data.append("author", AuthorId);
     form_data.append("authorName", AuthorName);
-
+    
     axiosInstance
       .post("/AddPost/", form_data)
       .then((res) => {
@@ -75,6 +75,7 @@ const CreateBook = () => {
           Dec={DecreaseStep}
           BookDescription={BookDescription}
           setBookDescription={setBookDescription}
+          setCategory={setCategory}
         />
       )}
       {stepNo === 2 && (

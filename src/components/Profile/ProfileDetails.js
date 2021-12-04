@@ -37,14 +37,14 @@ const ProfileDetails = (props) => {
           marginTop: "1%",
         }}
       >
-        <h1>{UserName[0]}</h1>
+        <h1>{UserName ? UserName[0] : ""}</h1>
       </Avatar>
       <Box sx={{ marginInline: "5vw" }}>
         <Typography variant="h4">{UserName}</Typography>
         <div style={{ display: "flex", marginTop: "5%" }}>
-          <InfoCard A={1} B={"Books Posted"} />
-          <InfoCard A={2} B={"To Be Reviewd"} />
-          <InfoCard A={5} B={"Books Reviewd "} />
+          <InfoCard A={+props.MyPosts} B={"Books Posted"} />
+          <InfoCard A={+props.MySubscribedPosts} B={"To Be Reviewd"} />
+          <InfoCard A={+props.MyReviewedPosts} B={"Books Reviewd "} />
         </div>
       </Box>
     </div>

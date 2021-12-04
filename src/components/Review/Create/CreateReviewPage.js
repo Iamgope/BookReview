@@ -14,8 +14,8 @@ import { useTheme } from "@mui/system";
 const ReviewForm = (props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const {ReviewId}=useParams();
-  const QuestionList=props.QuestionList
+  const { ReviewId } = useParams();
+  const QuestionList = props.QuestionList;
   const rootStyle = {
     justifyContent: "center",
     color: Colors.purple,
@@ -37,10 +37,11 @@ const ReviewForm = (props) => {
     </h5>
   ));
 
-
-
   const onAddQuestions = (question) => {
-    axiosInstance.post(`post/${ReviewId}/`,question).then(res=>console.log(res.data)).catch(err=>console.log(err))
+    axiosInstance
+      .post(`post/${ReviewId}/`, question)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
     const UpdatedQuestions = [...ReviewQuestions, question];
     setReviewQuestions(UpdatedQuestions);
     setBoxState(ReviewQuestions.length);
@@ -50,12 +51,14 @@ const ReviewForm = (props) => {
     <Fragment>
       <Grid container sx={rootStyle} columnSpacing="10%">
         <Grid item>
-          <NiceBox sx={{ maxWidth:isMobile? '80vw':'20vw', textAlign: "center" }}>
+          <NiceBox
+            sx={{ maxWidth: isMobile ? "80vw" : "20vw", textAlign: "center" }}
+          >
             <img
               src={props.BookCoverImage}
               alt="bookImage"
               style={{
-               maxWidth:'70%',
+                maxWidth: "70%",
                 justifyContent: "center",
                 padding: "3%",
                 borderRadius: "10%",
@@ -84,7 +87,10 @@ const ReviewForm = (props) => {
               <AddQuestions onAddQuestions={onAddQuestions} />
             )}
             {BoxState !== "Add" && (
-              <ShowQuestions Question={ReviewQuestions[+BoxState]} selectedAnswer={(A)=>{}}/>
+              <ShowQuestions
+                Question={ReviewQuestions[+BoxState]}
+                selectedAnswer={(A) => {}}
+              />
             )}
           </TheBox>
         </Grid>

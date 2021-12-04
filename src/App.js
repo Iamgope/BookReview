@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import useSWR from "swr";
 import AuthForm from "./Pages/Auth";
@@ -17,21 +17,38 @@ import Footer from "./components/Basic/Footer";
 import { fetcher } from "./components/Api/AxiosApi";
 import ForReviewPage from "./Pages/ForReviewPage";
 //import ReviewForm from "./components/Review/Create/CreateReviewPage";
-
+import axiosInstance from "./components/Api/AxiosApi";
 const App = () => {
   const dispatch = useDispatch();
-
+  const [AccountDetails, setAccountDetails] = useState({
+    email: null,
+    id: null,
+    username: null,
+  });
   const [open, setOpen] = useState(false);
-
+  const [AuthError,setAuthError]=useState(false);
   const { data } = useSWR(`/auth/user/`, fetcher);
+
   dispatch(authActions.setAccount(data));
-  console.log(data);
+  
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    setAuthError(false);
     setOpen(false);
   };
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      //setIsLoading(true);
+      await axiosInstance
+        .get("/auth/user/")
+        .then((res) =>{ setAccountDetails(res.data);});
+     
+    };
+    fetchMyPosts();
+  }, []);
+
   const SampleBook = {
     BookName: "The simple Success",
     Author: "Khaleesi Khan",
@@ -46,9 +63,14 @@ const App = () => {
   return (
     <Router>
       <main>
-        <NavBar handleOpen={handleOpen} handleClose={handleClose} />
+        <NavBar
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          AccountDetails={AccountDetails}
+          setAccountDetails={setAccountDetails}
+        />
         <ModalUI open={open} handleOpen={handleOpen} handleClose={handleClose}>
-          <AuthForm handleClose={handleClose} />
+          <AuthForm handleClose={handleClose} AuthError={AuthError} setAuthError={setAuthError}/>
         </ModalUI>
 
         <Switch>
@@ -59,18 +81,28 @@ const App = () => {
             <CreateBook />
           </Route>
           <Route path="/Profile">
-            <Dashboard />
+            <Dashboard setAccountDetails={setAccountDetails}/>
           </Route>
           <Route path={`/Post/:PostId`}>
             <BookFrontPage Book={SampleBook} />
           </Route>
           <Route path="/Review/:ReviewId">
-            <MyBook/>
+            <MyBook />
           </Route>
           <Route path="/ReviewPost/:ReviewPostId">
             <ForReviewPage />
           </Route>
-          <Route path="*"></Route>
+          <Route path="*">
+            <h2
+              style={{
+                marginTop: "40vh",
+                marginBottom: "40vh",
+                textAlign: "center",
+              }}
+            >
+              Oops! seems that you've lost your way
+            </h2>
+          </Route>
         </Switch>
         <Footer />
       </main>

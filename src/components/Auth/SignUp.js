@@ -42,7 +42,9 @@ const SignUp = (props) => {
       props.handleClose();
       return response;
     } catch (error) {
+      props.setAuthError(true);
       throw error;
+      
     }
   };
   const handleUserNameChange = (event) => {

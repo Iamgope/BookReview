@@ -1,23 +1,14 @@
 import { Fragment } from "react";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import Book003 from "../../Media/Book003.png";
 import { useState } from "react";
 import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import { Colors } from "../UI/colors";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import { fetcher } from "../Api/AxiosApi";
-
+import Book003 from '../../Media/Book003.png'
 const CatergoryWiseBooks = (props) => {
   let BookData = [
-    {
-      id: "01",
-      Name: "Norwegien Woods",
-      Author: "haruki murakami",
-      pages: "300",
-      price: 200,
-      BookCoverImage: Book003,
-    },
   ];
   const CategoryNo = props.CategoryNo;
   const { data } = useSWR(`/postbyCategory/${CategoryNo}/`, fetcher);
@@ -36,7 +27,7 @@ const CatergoryWiseBooks = (props) => {
             excerpt: Book.excerpt,
             status: Book.status,
             published: Book.published,
-            BookCoverImage: Book.BookCoverImage,
+            BookCoverImage: `https://res.cloudinary.com/iamgope/${Book.BookCoverImage}`,
           },
         ])
     );
