@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/BookReview/static/css/main.5a7b1971.chunk.css",
+    "main.js": "/BookReview/static/js/main.24f3466f.chunk.js",
+    "main.js.map": "/BookReview/static/js/main.24f3466f.chunk.js.map",
+    "runtime-main.js": "/BookReview/static/js/runtime-main.c36110c6.js",
+    "runtime-main.js.map": "/BookReview/static/js/runtime-main.c36110c6.js.map",
+    "static/js/2.e111e638.chunk.js": "/BookReview/static/js/2.e111e638.chunk.js",
+    "static/js/2.e111e638.chunk.js.map": "/BookReview/static/js/2.e111e638.chunk.js.map",
+    "static/js/3.e4ea1a5c.chunk.js": "/BookReview/static/js/3.e4ea1a5c.chunk.js",
+    "static/js/3.e4ea1a5c.chunk.js.map": "/BookReview/static/js/3.e4ea1a5c.chunk.js.map",
+    "index.html": "/BookReview/index.html",
+    "static/css/main.5a7b1971.chunk.css.map": "/BookReview/static/css/main.5a7b1971.chunk.css.map",
+    "static/js/2.e111e638.chunk.js.LICENSE.txt": "/BookReview/static/js/2.e111e638.chunk.js.LICENSE.txt",
+    "static/media/Book003.be4b67a0.png": "/BookReview/static/media/Book003.be4b67a0.png",
+    "static/media/Riview.06e2deef.png": "/BookReview/static/media/Riview.06e2deef.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c36110c6.js",
+    "static/js/2.e111e638.chunk.js",
+    "static/css/main.5a7b1971.chunk.css",
+    "static/js/main.24f3466f.chunk.js"
+  ]
+}
