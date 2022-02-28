@@ -4,7 +4,7 @@ Web application for peer to peer book review for aspiring writers.
 
 # Deployed Site
 
-kitaabdekho.netlify.app/
+https://kitaabdekho.netlify.app/
 
 
 
