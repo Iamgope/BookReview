@@ -2,6 +2,10 @@
 
 Web application for peer to peer book review for aspiring writers.
 
+# Deployed Site
+
+kitaabdekho.netlify.app/
+
 
 
 # Getting Started with Create React App
